@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="text-align: center;">
+
+<div th:include="css/cssBootStrapOther :: html"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> jquery 图片旋转</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <img id="img1" th:src="@{/images/chrome.png}" width="256" height="256"/>
+            <img id="img2" th:src="@{/images/chrome.png}" width="256" height="256"/>
+            <img id="img3" th:src="@{/images/chrome.png}" width="256" height="256"/>
+            <img id="img4" th:src="@{/images/chrome.png}" width="256" height="256"/>
+            <img id="img5" th:src="@{/images/chrome.png}" width="256" height="256"/>
+            <img id="img6" th:src="@{/images/chrome.png}" width="256" height="256"/>
+            <img id="img7" th:src="@{/images/chrome.png}" width="256" height="256"/>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"><a th:href="@{/core/jsHome}" class="btn btn-default"><i
+                        class="fa fa-rotate-left"></i>返回</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/assembly/plugins/jquery/rotate/jquery.rotate.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#img1').rotate({angle: 45});
+        $("#img2").rotate({
+            bind:
+                {
+                    mouseover: function () {
+                        $(this).rotate({animateTo: 180});
+                    },
+                    mouseout: function () {
+                        $(this).rotate({animateTo: 0});
+                    }
+                }
+
+        });
+
+        var angle = 0;
+        setInterval(function () {
+            angle += 3;
+            $("#img3").rotate(angle);
+        }, 50);
+
+
+        var rotation = function () {
+            $("#img4").rotate({
+                angle: 0,
+                animateTo: 360,
+                callback: rotation
+            });
+        };
+        rotation();
+
+        var rotation2 = function () {
+            $("#img5").rotate({
+                angle: 0,
+                animateTo: 360,
+                callback: rotation2,
+                easing: function (x, t, b, c, d) {        // t: current time, b: begInnIng value, c: change In value, d: duration
+                    return c * (t / d) + b;
+                }
+            });
+        };
+        rotation2();
+
+        $("#img6").rotate({
+            bind:
+                {
+                    click: function () {
+                        $(this).rotate({angle: 0, animateTo: 180, easing: $.easing.easeInOutExpo})
+                    }
+                }
+
+        });
+
+        var value2 = 0;
+        $("#img7").rotate({
+            bind:
+                {
+                    click: function () {
+                        value2 += 90;
+                        $(this).rotate({animateTo: value2})
+                    }
+                }
+
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Wed Dec 08 15:56:29 GMT+08:00 2021
+@default-maven2-http\://repo1.maven.org/maven2/.lastUpdated=1638950185106
+http\://msgpack.org/maven2/.error=
+https\://repository.aspose.com/repo/.lastUpdated=1638950189548
+http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1638950186206
+@default-mvnrepository-http\://mvnrepository.com/artifact/.lastUpdated=1638950183609
+http\://mvnrepository.com/artifact/.error=Could not transfer artifact com.aspose\:aspose-words\:jar\:sources\:16.4.0 from/to mvnrepository (http\://mvnrepository.com/artifact/)\: Access denied to\: http\://mvnrepository.com/artifact/com/aspose/aspose-words/16.4.0/aspose-words-16.4.0-sources.jar , ReasonPhrase\:Forbidden.
+http\://192.168.2.206\:8081/nexus/content/repositories/thirdparty/.error=
+https\://repository.aspose.com/repo/.error=
+http\://repo.e-iceblue.com/nexus/content/groups/public/.lastUpdated=1638950187789
+http\://maven.aliyun.com/nexus/content/groups/public/.error=
+http\://msgpack.org/maven2/.lastUpdated=1638950185859
+http\://192.168.2.206\:8081/nexus/content/repositories/releases/.error=
+http\://192.168.2.206\:8081/nexus/content/repositories/thirdparty/.lastUpdated=1638950181977
+http\://repo.e-iceblue.com/nexus/content/groups/public/.error=
+http\://repo1.maven.org/maven2/.error=Could not transfer artifact com.aspose\:aspose-words\:jar\:sources\:16.4.0 from/to maven2 (http\://repo1.maven.org/maven2/)\: Failed to transfer file\: http\://repo1.maven.org/maven2/com/aspose/aspose-words/16.4.0/aspose-words-16.4.0-sources.jar. Return code is\: 501 , ReasonPhrase\:HTTPS Required.
+http\://192.168.2.206\:8081/nexus/content/repositories/releases/.lastUpdated=1638950181958

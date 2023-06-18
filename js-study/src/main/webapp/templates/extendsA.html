@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="text-align: center;">
+<div th:include="css/cssBootStrap :: html"></div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2>extendsA</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"> <a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+   //原型式继承
+   (function () {
+       function object(o) {
+           function F() {}
+           F.prototype = o;
+           return new F();
+       }
+       var person = {
+           "name":"blake",
+           friends:["张三","王麻子"]
+       }
+       var personAnother = object(person);
+       personAnother.name = "Greg" ;
+       personAnother.friends.push("小顺子");
+       console.info(person.friends);
+       console.info(person.name);
+   })();
+   (function () {
+       function cloneObject(o) {
+           function F() {}
+           F.prototype = o;
+           return new F();
+       }
+       var config = {
+           flag:true
+       }
+
+       var f1 = cloneObject(config);
+       console.info(f1.flag);
+       f1.flag = false;
+       console.info(f1.flag);
+       console.info(config.flag);
+       console.info(f1.flag);
+       //Object.create(oo)
+   })();
+
+
+   //组合继承
+   (function () {
+       console.info("");
+       console.info("组合继承");
+       //用的最多的方式
+       function SuperType(name) {
+           this.name = name;
+           this.colors =["red","blue","green"] ;
+       }
+       SuperType.prototype.sayName = function () {
+           console.info("name:"+this.name);
+       }
+
+       function SubType(name,age) {
+           //继承属性
+           SuperType.call(this,name);
+           this.age = age;
+       }
+       //继承方法
+       SubType.prototype = new SuperType();
+       SubType.prototype.constructor = SuperType;
+       SubType.prototype.sayAge = function () {
+           console.log("age:"+this.age);
+       }
+       var instance1 = new SubType("alice",22);
+       instance1.colors.push("yellow","gold");
+       console.log(instance1.colors);
+       instance1.sayName();
+       instance1.sayAge();
+   })();
+   (function () {
+       //组合式 继承练习
+       function Config() {
+           this.flag = true;
+           this.frm = "FrmDD" ;
+       }
+       Config.prototype.getFlag = function () {
+           return this.flag;
+       }
+       Config.prototype.setFlag = function (flag) {
+            this.flag = flag;
+       }
+       function Fun() {
+
+       }
+       //这样就做到了Fun继承Config
+       Fun.prototype = new Config();
+       Fun.prototype.constructor = Config;
+
+       var fun = new Fun();
+       console.log(fun.getFlag());
+       fun.setFlag(false);
+       console.log(fun.getFlag());
+       console.log(fun.frm);
+       fun.frm = "sdgydsfghdsfg";
+       console.log(fun.frm);
+   })();
+
+   (function () {
+        var AlgorithmsPrototype = function () {
+
+        };
+
+        /**
+        * @author:  zch
+        * 描述:判断是否为数字
+        * @date:
+        **/
+       AlgorithmsPrototype.prototype.isNumber = function (obj) {
+           if (AlgorithmsPrototype.prototype.isNotNull(obj)){
+               var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+               var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+               if(regPos.test(obj) || regNeg.test(obj)){
+                   return true;
+               }else{
+                   return false;
+               }
+           }else {
+               return false;
+           }
+       };
+
+        /**
+        * @author:  zch
+        * 描述:判断是否为null
+        * @date:
+        **/
+       AlgorithmsPrototype.prototype.isNotNull = function (obj) {
+           if (obj == null){
+               return false;
+           }
+           if (obj == ''){
+               return false;
+           }
+           if (obj == ""){
+               return false;
+           }
+           if (obj == 'undefined'){
+               return false;
+           }
+           return true;
+       };
+
+       /**
+        * @author:  zch
+        * 描述:判断是否为正数
+        * @date:2018-08-07
+        **/
+       AlgorithmsPrototype.prototype.isPlus = function (argA) {
+           if (AlgorithmsPrototype.prototype.isNotNull(argA)){//非空校验
+               if (AlgorithmsPrototype.prototype.isNumber(argA)){//数字校验
+                   var reg = /^\d+(?=\.{0,1}\d+$|$)/ ;
+                   if(reg.test(argA)){
+                       return true;
+                   }
+                   return false ;
+               }else {
+                   return false;
+               }
+           }else {
+               return false;
+           }
+       };
+
+
+       /**
+        * @author:  zch
+        * 描述:函数，加法函数，用来得到精确的加法结果 如:3,2 = 5
+        * 参数：arg1：第一个加数；arg2第二个加数；d要保留的小数位数（可以不传此参数，如果不传则不处理小数位数）
+        * @date:2018-08-07
+        * @return 两数相加的结果
+        **/
+       AlgorithmsPrototype.prototype.add = function (arg1,arg2) {
+           if (AlgorithmsPrototype.prototype.isNumber(arg1)){
+               if (AlgorithmsPrototype.prototype.isNumber(arg2)){
+                   arg1 = arg1.toString(), arg2 = arg2.toString();
+                   var arg1Arr = arg1.split("."), arg2Arr = arg2.split("."), d1 = arg1Arr.length == 2 ? arg1Arr[1] : "", d2 = arg2Arr.length == 2 ? arg2Arr[1] : "";
+                   var maxLen = Math.max(d1.length, d2.length);
+                   var m = Math.pow(10, maxLen);
+                   var result = Number(((arg1 * m + arg2 * m) / m).toFixed(maxLen));
+                   var d = arguments[2];
+                   return typeof d === "number" ? Number((result).toFixed(d)) : result;
+               }else {
+                   return '';
+               }
+           }else {
+               return "";
+           }
+       };
+       
+       /**
+       * @author:  zch
+       * 描述:减法函数，用来得到精确的减法结果 如:3,2 = 1
+        *参数：arg1：第一个加数；arg2第二个加数；d要保留的小数位数（可以不传此参数，如果不传则不处理小数位数
+       * @date:2018-08-07
+       **/
+       AlgorithmsPrototype.prototype.sub = function (arg1, arg2) {
+           if (AlgorithmsPrototype.prototype.isNumber(arg1)){
+               if (AlgorithmsPrototype.prototype.isNumber(arg2)){
+                    return AlgorithmsPrototype.prototype.add(arg1,-Number(arg2), arguments[2]);
+               }else {
+                   return "";
+               }
+           }else {
+               return "";
+           }
+       };
+
+       /**
+       * @author:  zch
+       * 描述:乘法函数，用来得到精确的乘法结果 如:3,2 = 6
+       * 参数：arg1：第一个乘数；arg2第二个乘数；d要保留的小数位数（可以不传此参数，如果不传则不处理小数位数)
+       * @date:2018-08-07
+       **/
+       AlgorithmsPrototype.prototype.mul = function (arg1, arg2) {
+           if (AlgorithmsPrototype.prototype.isNumber(arg1)){
+               if (AlgorithmsPrototype.prototype.isNumber(arg2)){
+                   var r1 = arg1.toString(), r2 = arg2.toString(), m, resultVal, d = arguments[2];
+                   m = (r1.split(".")[1] ? r1.split(".")[1].length : 0) + (r2.split(".")[1] ? r2.split(".")[1].length : 0);
+                   resultVal = Number(r1.replace(".", "")) * Number(r2.replace(".", "")) / Math.pow(10, m);
+                   return typeof d !== "number" ? Number(resultVal) : Number(resultVal.toFixed(parseInt(d)));
+               }else {
+                   return "";
+               }
+           }else {
+               return "";
+           }
+       }
+
+       /**
+       * @author:  zch
+       * 参数：arg1：除数；arg2被除数；d要保留的小数位数（可以不传此参数，如果不传则不处理小数位数)
+       * 描述:除法函数，用来得到精确的除法结果 如:3,2 = 1.5
+       * @date:2018-08-07
+       **/
+       AlgorithmsPrototype.prototype.div = function (arg1, arg2) {
+           if (AlgorithmsPrototype.prototype.isNumber(arg1)){
+               if (AlgorithmsPrototype.prototype.isNumber(arg2)){
+                   if (arg1 != 0){//除数不能为0
+                       var r1 = arg1.toString(), r2 = arg2.toString(), m, resultVal, d = arguments[2];
+                       m = (r2.split(".")[1] ? r2.split(".")[1].length : 0) - (r1.split(".")[1] ? r1.split(".")[1].length : 0);
+                       resultVal = Number(r1.replace(".", "")) / Number(r2.replace(".", "")) * Math.pow(10, m);
+                       return typeof d !== "number" ? Number(resultVal) : Number(resultVal.toFixed(parseInt(d)));
+                   }else {
+                       return "";
+                   }
+               }else {
+                   return "";
+               }
+           }else {
+               return "";
+           }
+       }
+       /**
+       * @author:  zch
+       * 描述:测试
+       * @date:  2018-08-07
+       **/
+       AlgorithmsPrototype.prototype.dataTest = function () {
+           console.log("加法测试(正常参数):"+AlgorithmsPrototype.prototype.add(0.2,0.1));
+           console.log("加法测试(异常参数 null , 0.1):"+AlgorithmsPrototype.prototype.add(null,0.1));
+           console.log("加法测试(异常参数 null , null):"+AlgorithmsPrototype.prototype.add(null,null));
+           console.log("加法测试(异常参数 '' , null):"+AlgorithmsPrototype.prototype.add('',null));
+           console.log("加法测试(异常参数 '' , ''):"+AlgorithmsPrototype.prototype.add('',''));
+
+           console.log("减法测试(正常参数):"+AlgorithmsPrototype.prototype.sub(3,2));
+           console.log("减法测试(异常参数 null , 0.1):"+AlgorithmsPrototype.prototype.sub(null,2));
+           console.log("减法测试(异常参数 null , null):"+AlgorithmsPrototype.prototype.sub(null,null));
+           console.log("减法测试(异常参数 '' , null):"+AlgorithmsPrototype.prototype.sub('',null));
+           console.log("减法测试(异常参数 '' , ''):"+AlgorithmsPrototype.prototype.sub('',''));
+
+           console.log("乘法测试(正常参数):"+AlgorithmsPrototype.prototype.mul(3,2));
+           console.log("乘法测试(异常参数 null , 0.1):"+AlgorithmsPrototype.prototype.mul(null,2));
+           console.log("乘法测试(异常参数 null , null):"+AlgorithmsPrototype.prototype.mul(null,null));
+           console.log("乘法测试(异常参数 '' , null):"+AlgorithmsPrototype.prototype.mul('',null));
+           console.log("乘法测试(异常参数 '' , ''):"+AlgorithmsPrototype.prototype.mul('',''));
+
+           console.log("除法测试(正常参数):"+AlgorithmsPrototype.prototype.div(3,2));
+           console.log("除法测试(异常参数 null , 0):"+AlgorithmsPrototype.prototype.div(null,0));
+           console.log("除法测试(异常参数 0 , 0):"+AlgorithmsPrototype.prototype.div(0,0));
+           console.log("除法测试(异常参数 null , null):"+AlgorithmsPrototype.prototype.div(null,null));
+           console.log("除法测试(异常参数 '' , null):"+AlgorithmsPrototype.prototype.div('',null));
+           console.log("除法测试(异常参数 '' , ''):"+AlgorithmsPrototype.prototype.div('',''));
+       };
+
+       function algorithms() {
+
+       }
+       //继承精确计算方法
+       algorithms.prototype = new AlgorithmsPrototype();
+       // algorithms.prototype.constructor = AlgorithmsPrototype;
+
+
+       algorithms.prototype.getName = function () {
+            return "爱丽丝";
+       };
+       algorithms.prototype.dataTest();
+   })();
+
+   /**
+   * @author:  zch
+   * 描述:数组判断
+   * @date:2018-08-07
+   **/
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+</script>
+</body>
+</html>

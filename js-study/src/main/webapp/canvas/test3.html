@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:include="css/cssBootStrapOther :: html"></div>
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> canvas 第3个例子 </h2>
+        </div>
+
+        <canvas id="myCanvas1" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas2" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas3" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas4" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas5" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas6" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas7" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"><a th:href="@{/core/jsHome}" class="btn btn-default"><i
+                        class="fa fa-rotate-left"></i>返回</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/assembly/plugins/jquery/rotate/jquery.rotate.min.js}"></script>
+<script type="text/javascript" th:src="@{/assembly/js/rotate.js}"></script>
+<script type="text/javascript">
+    //https://www.cnblogs.com/liugang-vip/p/5360283.html
+    var objObject = new Object();
+
+    var imgUrl = '[[${application.ctx}]]' + "/images/chrome.png";
+
+    //one(线)
+    (function () {
+        var c = document.getElementById("myCanvas1");
+        var ctx = c.getContext("2d");
+        //MoveTo(x,y) 顾名思义，就是移动到某个坐标点上，x,y 分别表示x轴坐标和y轴坐标
+        ctx.moveTo(0, 0);
+        //ineTo(x,y) 意思是连接最后一点的坐标，但是不画，x,y 分别表示x轴坐标和y轴坐标
+        ctx.lineTo(200, 200);
+        /*然而并没有任何效果，这是为什么呢，实际上，上面只是标注了直线的起点和终点，还没添墨水呢，何为墨水呢？*/
+
+        /*
+        * 下面就来介绍我们的黑白双煞：
+        fill()  填充，此为实心的
+        stroke()  绘制，此为空心的
+        因为线条的宽度只有一个像素，所以无法进行填充，于是画线段用fill()方法是没有用的
+        * */
+        // ctx.fill();//无效
+        ctx.stroke();
+    }());
+
+    //two(面)
+    /*
+    * 此黑白双煞在以后的绘图中起到核心作用，切记这2个方法（为什么我叫它们黑白双煞呢，因为canvas默认颜色为黑色，fill（）填充颜色为一坨黑，stroke（）绘制就像描边一样，一个框，里面是透明的，由此得名，哈哈，方便记忆）。
+        点，线之后便是面了，我们来绘制矩形吧，矩形也有三兄弟，暂且命名为阮氏三兄弟：
+    * */
+    (function () {
+        //rect(x,y,w,h)   在x,y坐标点绘制一个矩形，宽高为w,h，此方法只是绘制路径，必须用黑白双煞才能显示
+        (function () {
+            var c = document.getElementById("myCanvas2");
+            var ctx = c.getContext("2d");
+            ctx.rect(0,0,50,50);
+            ctx.fill();
+        }());
+
+        (function () {
+            var c = document.getElementById("myCanvas3");
+            var ctx = c.getContext("2d");
+            ctx.rect(0,0,50,50);
+            ctx.stroke();
+        }());
+
+        //fillRect(x,y,w,h)  在x,y坐标点绘制一个填充矩形，宽高为w,h
+        (function () {
+            var c = document.getElementById("myCanvas4");
+            var ctx = c.getContext("2d");
+            ctx.rect(0,0,50,50);
+            ctx.fillRect(0,0,50,50);//作用与fill和rect的组合方法一致
+        }());
+
+        //strokeRect(x,y,w,h)  在x,y坐标点绘制一个描边矩形，宽高为w,h
+        (function () {
+            var c = document.getElementById("myCanvas5");
+            var ctx = c.getContext("2d");
+            ctx.strokeRect(0,0,50,50);//作用与stroke和rect的组合方法一致
+        }());
+    }());
+
+    /**
+     * 矩形之后就可以画圆了，但是圆相对来说比较复杂，咱们还是先来练练字，谢谢书法，哈哈，看看canvas编辑文字有哪些方法：
+
+     我们说画布上的图形皆为路径，所以，文字作为另一种图形，也存在黑白双煞：
+
+     fillText(text,x,y,[maxWidth]);  顾名思义，这是填充文字
+
+     strokeText(text,x,y,[maxWidth]); 顾名思义，这是描边文字
+
+     参数：
+
+     text ：需要绘制的文字
+
+     x,y: 文字绘制的起始坐标
+
+     [maxWidth] ： 文字的最大宽度，选填
+     * */
+    (function () {
+        (function () {
+            var c = document.getElementById("myCanvas6");
+            var ctx = c.getContext("2d");
+            ctx.textBaseline = "top";
+            ctx.fillText("你好!",10,10,50);
+        }());
+        /**
+         * 结果简直让人大吃一精，哎，是惊！文字怎么跑那里去了，了解css 的都知道，文字是有基准线的，这玩意也是老外的英文搞出来的，html文字基准线是baseline，可以用vertical-align来修改基准线，canvas有吗？哈哈，还真有：
+
+         textBaseline
+
+         参数：
+
+         alphabetic ： 默认。文本基线是普通的字母基线。
+
+         top ： 文本基线是 em 方框的顶端。
+
+         hanging ： 文本基线是悬挂基线。
+
+         middle ：文本基线是 em 方框的正中。
+
+         ideographic ： 文本基线是表意基线。
+
+         bottom ：文本基线是 em 方框的底端。
+         * **/
+        (function () {
+            var c = document.getElementById("myCanvas7");
+            var ctx = c.getContext("2d");
+            ctx.textBaseline = "middle";
+            ctx.strokeText("你想对我说什么",20,20,50);
+        }());
+    }());
+
+
+</script>
+
+</body>
+</html>

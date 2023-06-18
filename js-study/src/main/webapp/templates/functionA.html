@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="text-align: center;">
+<div th:include="css/cssBootStrap :: html"></div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2>functionA</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"> <a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //1 函数标识记法 又名 函数字面量表示法
+    var f = function () {
+        return Math.round(Math.random()*10);
+    }
+    console.log(f());
+
+    //2 匿名函数
+    var f2 = function (a) {
+        return a;
+    }
+    //
+    function addSum(a,b) {
+        return a+b;
+    }
+    //这里实际上是将参数作为函数传递的
+    console.log(f2(addSum(3,4)));
+
+    //3 回调函数
+    function invokeAdd(a,b) {
+        return a() + b();
+    }
+    function one() {
+        return Math.random();
+    }
+    function two() {
+        return Math.random();
+    }
+    console.log(invokeAdd(one,two));//不要带括号
+
+    //4 即使函数
+    (function () {
+        console.log("message");
+    })();
+
+    //5 内部私有函数
+    var outer = function (param) {
+        var inner = function (thinput) {
+            return thinput * 2;
+        }
+        return "resule:"+inner(param);
+    }
+    console.log(outer(3.2));
+
+    // 6 返回函数的函数
+    function f3() {
+        console.log("A");
+        return function () {
+
+        };
+    }
+
+    var data = {};
+    data.message = "Zdsfd";
+    var xxv = null;
+    xxv = data.fg ;
+    if (xxv){
+        console.info("值存在");
+    }else {
+        console.info("值不存在");
+    }
+
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+</script>
+</body>
+</html>

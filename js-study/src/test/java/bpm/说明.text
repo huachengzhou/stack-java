@@ -1,0 +1,3 @@
+-Dfile.encoding=UTF-8
+
+以上是防止 activiti 乱码

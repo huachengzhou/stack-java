@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry
+            location="D:\lib\mysql-connector-java-5.1.23.jar"/>
+
+    <context id="ticket-pms">
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/webinstall?serverTimezone=UTC" userId="root" password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!-- entity 位置-->
+        <javaModelGenerator targetPackage="com.blue.entity"
+                            targetProject="F:\intellij\Ultimate2017\web-install\bootstrap-Install\src\main\java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- mapper xml 位置 -->
+        <sqlMapGenerator targetPackage="mybatis"
+                         targetProject="F:\intellij\Ultimate2017\web-install\bootstrap-Install\src\main\resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--mapper 接口位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.blue.mapper"
+                             targetProject="F:\intellij\Ultimate2017\web-install\bootstrap-Install\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 具体表 -->
+        <table tableName="tb_web_user" domainObjectName="WebUser">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+
+</generatorConfiguration>

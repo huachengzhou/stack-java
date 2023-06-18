@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:include="css/cssBootStrapOther :: html"></div>
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> jquery 图片旋转 2</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom:20px;margin-top:20px;">
+            <section>
+                <button onClick=" fly();">开始</button>
+                <canvas id="myCanvas" width="1300" height="1000">
+                </canvas>
+            </section>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <img id="img1" th:src="@{/images/chrome.png}" width="256" height="256"/>
+            <img id="img2" th:src="@{/images/chrome.png}" width="256" height="256"/>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"><a th:href="@{/core/jsHome}" class="btn btn-default"><i
+                        class="fa fa-rotate-left"></i>返回</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/assembly/plugins/jquery/rotate/jquery.rotate.min.js}"></script>
+<script type="text/javascript">
+
+
+    function fly() {
+        var myImage = document.getElementById("myCanvas");
+        var cxt = myImage.getContext("2d");
+        var img = new Image();
+        img.src = "http://www.baidu.com/img/bd_logo1.png";
+
+        //执行旋转的特效
+        function spfly() {
+            cxt.drawImage(img, 400, 700);
+            cxt.translate(-80, 60); //中心点
+            cxt.rotate(-0.1);
+            //clearInterval(timer);
+        }
+
+        var timer = setInterval(spfly, 60);
+    };
+
+    $(document).ready(function () {
+        $("#img1").draggable();
+        $('#img1').rotate({angle: 125});
+
+        $('#img1').mousedown(function (e) {
+            if (3 == e.which) {
+                console.log('这 是右键单击事件');
+            } else if (1 == e.which) {
+                console.log('这 是左键单击事件');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

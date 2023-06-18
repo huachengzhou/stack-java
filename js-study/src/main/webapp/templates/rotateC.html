@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:include="css/cssBootStrapOther :: html"></div>
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> jquery 图片旋转 3</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <img id="imgA" th:src="@{/images/B69B3AFB.png}"/>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12" id="backGround" style="width:1000px;height: 1000px;">
+
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"><a th:href="@{/core/jsHome}" class="btn btn-default"><i
+                        class="fa fa-rotate-left"></i>返回</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/assembly/plugins/jquery/rotate/jquery.rotate.min.js}"></script>
+<script type="text/javascript">
+
+    var obj = {};
+
+    /**
+     * 背景设置
+     */
+    obj.setBackGround = function () {
+        var _ctx = '[[${application.ctx}]]';
+        $(".container").css('background', 'url([[${application.ctx}]]/images/DF8A8A34.png) left no-repeat');
+    };
+
+    /**
+     * 旋转开启
+     */
+    obj.rotateRun = function () {
+        var oldY = null;
+        var isdown = false;
+        $("#imgA").mousedown(function (e) {
+            isdown = true;
+            oldY = e.clientY;
+        });
+        $("html").mousemove(function (e) {
+            console.log(isdown);
+            if (isdown) {
+                console.log('deg' + (e.clientY - oldY));
+                $("#imgA").rotate({angle: (e.clientY - oldY)});
+            }
+        });
+        $("html").mouseup(function (e) {
+            isdown = false;
+            oldY = null;
+        });
+    };
+
+    $(document).ready(function () {
+        obj.setBackGround();
+        //开启拖动
+        $("#imgA").draggable();
+        //开启旋转
+        obj.rotateRun();
+    });
+
+</script>
+
+</body>
+</html>

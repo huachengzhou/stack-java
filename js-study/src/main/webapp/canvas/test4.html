@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:include="css/cssBootStrapOther :: html"></div>
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> canvas 第4个例子 </h2>
+        </div>
+
+        <canvas id="myCanvas1" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas2" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas3" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas4" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas5" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas6" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas7" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+        <canvas id="myCanvas8" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:156px;">
+        </canvas>
+
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"><a th:href="@{/core/jsHome}" class="btn btn-default"><i
+                        class="fa fa-rotate-left"></i>返回</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/assembly/plugins/jquery/rotate/jquery.rotate.min.js}"></script>
+<script type="text/javascript" th:src="@{/assembly/js/rotate.js}"></script>
+<script type="text/javascript">
+
+    var objObject = new Object();
+    //https://www.cnblogs.com/liugang-vip/p/5364292.html
+
+    var imgUrl = '[[${application.ctx}]]' + "/images/chrome.png";
+
+
+    //画 三角形(假)
+    (function () {
+        var c = document.getElementById("myCanvas1");
+        var ctx = c.getContext("2d");
+        ctx.moveTo(0, 0);
+        ctx.lineTo(50, 50);
+        ctx.lineTo(0, 100);
+        ctx.stroke();
+    }());
+
+    //呀呵，怎么是一个折线，三角形不是只有三个点吗？是不是因为没有闭合呢？那我再加一个点
+    //画真三角形
+    (function () {
+        var c = document.getElementById("myCanvas2");
+        var ctx = c.getContext("2d");
+        ctx.moveTo(0, 0);
+        ctx.lineTo(50, 50);
+        ctx.lineTo(0, 100);
+        ctx.lineTo(0, 0);
+        ctx.stroke();
+    }());
+    /*
+    * 哈哈，果然机智如你啊！这个思路其实是正解的，三角形就是这么简单，其实还有一种方式可以画三角形，只需3个点，那就是我们要介绍的：
+    closePath() 闭合路径
+    有闭合就是开始，一般来说他们是成双成对的
+    beginPath() 开始路径
+    这对活宝的用法一般是
+    * */
+    /*
+    * ctx.beginPath();
+    ctx.closePath();
+    * */
+
+    (function () {
+        var c = document.getElementById("myCanvas3");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.strokeStyle = "blue";
+        ctx.moveTo(0, 0);
+        ctx.lineTo(50, 50);
+        ctx.lineTo(0, 50 + 50);
+        ctx.lineTo(0, 0);
+        ctx.closePath();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.strokeStyle = "red";
+        ctx.moveTo(60, 0);
+        ctx.lineTo(60, 50);
+        ctx.lineTo(100, 50 + 50);
+        ctx.lineTo(60, 0);
+        ctx.closePath();
+        ctx.stroke();
+    }());
+
+    //lineWidth  设置或返回当前的线条宽度
+    (function () {
+        var c = document.getElementById("myCanvas4");
+        var ctx = c.getContext("2d");
+        var timer = null;
+        var num = 1;
+        ctx.moveTo(150, 50);
+        ctx.strokeStyle = 'gold';
+        setInterval(function () {
+            if (num == 100) {
+                clearInterval(timer);
+                num = 1;
+            } else {
+                num++;
+            }
+            ;
+            ctx.lineTo(150, 100 + num * 2);
+            ctx.lineWidth = num;
+            ctx.stroke();
+        }, 100)
+    }());
+
+    (function () {
+        var c = document.getElementById("myCanvas5");
+        var ctx = c.getContext("2d");
+        ctx.moveTo(0, 0);
+        ctx.strokeStyle = "yellow";
+        for (var i = 0; i < 10; i++) {
+            ctx.lineTo(150, 150 * i + 1);
+            ctx.lineWidth = i;
+        }
+        ctx.stroke();
+    }());
+
+    /*
+    *  关于线条，还有另外2个属性：
+    lineJoin  两线交叉的拐角类型
+    参数：
+    miter ： 尖角 默认
+    bevel ： 斜角
+    round ： 圆角
+    什么意思，那就用空心矩形为例
+    * */
+
+    (function () {
+        var c = document.getElementById("myCanvas6");
+        var ctx = c.getContext("2d");
+        ctx.lineWidth = 10;
+
+        ctx.beginPath();
+        ctx.lineJoin = 'miter';
+        ctx.strokeRect(100, 10, 80, 80);
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.lineJoin = 'round';
+        ctx.strokeRect(100, 110, 80, 80);
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.lineJoin = 'bevel' ;
+        ctx.strokeRect(200,100,80,80);
+        ctx.closePath();
+    }());
+
+    (function () {
+        //miterLimit 规定最大斜接长度
+        var c = document.getElementById("myCanvas7");
+        var ctx = c.getContext("2d");
+        ctx.lineWidth = 12;
+        ctx.lineJoin = 'miter' ;
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(0,10);
+        ctx.lineTo(20,0);
+        ctx.lineTo(0,0);
+        ctx.stroke();
+        ctx.closePath();
+
+        //lineCap  设置或返回线条的结束端点样式  注意，这是设置线条的哦！
+        /*
+        * 参数：
+        butt 默认。向线条的每个末端添加平直的边缘。
+        round  向线条的每个末端添加圆形线帽。
+        square 向线条的每个末端添加正方形线帽。
+        * */
+        ctx.beginPath();
+        ctx.moveTo(40,2);
+        ctx.lineTo(45,2);
+        ctx.lineCap = 'butt' ;
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.moveTo(60,0);
+        ctx.lineTo(60,10);
+        ctx.lineCap = 'round' ;
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.moveTo(80,0);
+        ctx.lineTo(80,10);
+        ctx.lineCap = 'square' ;
+        ctx.stroke();
+        ctx.closePath();
+    }());
+
+    //画⚪
+    (function () {
+        //arc(x,y,r,sAngle,eAngle,counterclockwise)
+        /*
+        *  x,y表示坐标点表示圆心坐标，r表示半径，sAngle表示开始弧度，eAngle表示结束弧度，counterclockwise表示顺时针还是逆时针方式，默认为顺时针false，逆时针为true
+        * */
+        var c = document.getElementById("myCanvas8");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(40,40,20,Math.PI/180,180*Math.PI/180,false);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(80,40,20,Math.PI/180,180*Math.PI/180,true);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(80,100,50,30*Math.PI/180,150*Math.PI/180,false);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(150,40,30,0,360*Math.PI/180,true);
+        ctx.fill();
+        ctx.closePath();
+    }());
+
+
+</script>
+
+</body>
+</html>

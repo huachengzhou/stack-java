@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <div th:include="css/cssBootStrap :: html"></div>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+
+        <div class="col-xl-12 col-sm-12">
+            <div>
+                <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                    <li class="list-group-item"> <a th:href="@{/js/helloWorld}" class="btn btn-default"><i class="fa fa-link"></i>js 参数检测</a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/functionA}" class="btn btn-default"><i class="fa fa-link"></i>js 函数</a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/objectA}" class="btn btn-default"><i class="fa fa-link"></i>js 对象</a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/extendsA}" class="btn btn-default"><i class="fa fa-link"></i>js 继承 A</a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/regexA}" class="btn btn-default"><i class="fa fa-link"></i>js 正则表达式 A</a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/practiceA}" class="btn btn-default"><i class="fa fa-link"></i>js 练习 A</a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/callAndApply}" class="btn btn-default"><i class="fa fa-link"></i>js call and apply </a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/windowOpen}" class="btn btn-default"><i class="fa fa-link"></i>js 自定义弹出框 </a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/rotateA}" class="btn btn-default"><i class="fa fa-link"></i>jquery 图片旋转 </a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/rotateB}" class="btn btn-default"><i class="fa fa-link"></i>jquery 图片旋转 2 </a> </li>
+                    <li class="list-group-item"> <a th:href="@{/js/rotateC}" class="btn btn-default"><i class="fa fa-link"></i>jquery 图片旋转 3 </a> </li>
+
+                    <li class="list-group-item"> <a th:href="@{/canvas/helloWorld}" class="btn btn-default"><i class="fa fa-link"></i>canvas helloWorld </a> </li>
+                    <li class="list-group-item"> <a th:href="@{/canvas/test2}" class="btn btn-default"><i class="fa fa-link"></i>canvas test2 </a> </li>
+                    <li class="list-group-item"> <a th:href="@{/canvas/test3}" class="btn btn-default"><i class="fa fa-link"></i>canvas test3 </a> </li>
+                    <li class="list-group-item"> <a th:href="@{/canvas/test4}" class="btn btn-default"><i class="fa fa-link"></i>canvas test4 </a> </li>
+                </ul>
+
+                <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                    <li class="list-group-item"> <a th:href="@{/core/coreHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

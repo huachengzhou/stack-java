@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <div th:include="css/cssBootStrap :: html"></div>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2>helloWorld</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"> <a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    (function () {
+        var message;
+        /**
+         * @author:  zch
+         * 描述:
+         * @date:  2018-07-31
+         **/
+        (function () {
+            var flag = Math.round(Math.random() * 100);
+            message = function () {
+
+            };
+            message.prototype = {
+                getFlag: function () {
+                    return flag;
+                },
+                setFlag: function (flag_) {
+                    flag = flag_;
+                }
+            };
+        })();
+
+        console.info(message.prototype.getFlag());
+        message.prototype.setFlag(12);
+        console.info(message.prototype.getFlag());
+
+        /**
+         * @author:  zch
+         * 描述:
+         * @date: 2018-07-31
+         **/
+        function Person(name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        }
+
+        var p1 = new Person("alice", 22, "man");
+        console.info(p1);
+        console.info(p1.age);
+
+        /**
+         * @author:  zch
+         * 描述:多个参数
+         * @date:
+         **/
+        var a = 3, b = 5, v = 2;
+        console.info("a:" + a);
+        console.info("b:" + b);
+        console.info("v:" + v);
+
+        console.info("前置递增:" + ++a);
+        console.log("a:" + a);
+
+        console.log("后置递增:" + b++);
+        console.log("b:" + b);
+
+        a += a + 1;
+        console.info("a:" + a);
+    })();
+
+    (function () {
+        /*类型查看*/
+        var a = true;
+        var b = Math.round(Math.random()*100);
+        var c;
+        var o = new Object();
+        var f = function () {
+
+        };
+        var s = "xxx";
+        console.info("boolean 类型"+ typeof(a));
+        console.info("string 类型"+ typeof(s));
+        console.info("number 类型"+ typeof(b));
+        console.info("undefined 类型"+ typeof(c));
+        console.info("function 类型"+ typeof(f));
+
+        var v = -Infinity + 2;//最大数
+        console.info("Infinity 类型单独："+typeof(v));
+        console.info("Infinity 类型："+typeof(Infinity - Infinity));
+        console.info(typeof NaN);
+    })();
+
+    (function () {
+       //数组检测
+        var arr = [4,67,23];
+        var i = 0;
+        console.log("数组检测方法"+ ++i +": "+ typeof(arr));
+        //补充：但是instanceof不一定能保证检测的结果一定正确，例如index页面传入一个arr变量给iframe去处理，则即使arr instanceof Array还是返回false，因为两个引用的Array类型不是同一个。并且constructor可以重写所以不能确保万无一失。
+        console.log("数组检测方法"+ ++i +": "+ (arr instanceof Array));
+        console.log("数组检测方法"+ ++i +": "+ Array.isArray(arr));//EcmScript5 以上
+        console.log("数组检测方法"+ ++i +": "+ (Object.prototype.toString.call(arr) === '[object Array]'));//可以确保方法能检测一定是数组
+        console.log("数组检测方法"+ ++i +": "+ isArray(arr));//自己封装后的方法
+    })();
+
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+</script>
+</body>
+</html>

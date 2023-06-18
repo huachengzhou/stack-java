@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>BPMN_2_0</ID>
+  <OriginalElement>flowPath=D:/IdeaProjects/web-install/js-study/src/test/java/bpm/A1.xml</OriginalElement>
+  <nodes>
+    <node x="16.0" y="425.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2524</node>
+    <node x="16.0" y="340.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2528</node>
+    <node x="116.0" y="425.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2520</node>
+    <node x="10.0" y="255.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2512</node>
+    <node x="22.0" y="170.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2504</node>
+    <node x="10.0" y="85.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2496</node>
+    <node x="29.25" y="520.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TEndEvent @2532</node>
+    <node x="16.0" y="0.0">interface com.intellij.jboss.jbpm.model.xml.bpmn20.TStartEvent @2493</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2496" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2504">
+      <point x="0.0" y="15.5" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2524" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TEndEvent @2532">
+      <point x="0.0" y="15.5" />
+      <point x="-21.75" y="-15.5" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2504" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2512">
+      <point x="0.0" y="15.5" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2528" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2524">
+      <point x="0.0" y="15.5" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TStartEvent @2493" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2496">
+      <point x="0.0" y="15.5" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2512" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2528">
+      <point x="0.0" y="15.5" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2520" target="interface com.intellij.jboss.jbpm.model.xml.bpmn20.TEndEvent @2532">
+      <point x="0.0" y="15.5" />
+      <point x="151.0" y="500.0" />
+      <point x="94.5" y="500.0" />
+      <point x="21.75" y="-15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9544658493870403" x="98.47064220183489" y="295.5" />
+  <SelectedNodes>
+    <node>interface com.intellij.jboss.jbpm.model.xml.bpmn20.TUserTask @2524</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Details</Category>
+  </Categories>
+</Diagram>
+

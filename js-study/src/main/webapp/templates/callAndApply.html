@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="text-align: center;">
+<div th:include="css/cssBootStrap :: html"></div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> call and apply</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"> <a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    /*每个函数都包含两个非继承而来的方法：call()方法和apply()方法*/
+    var TestObject = function () {
+
+    }
+    TestObject.prototype.headFirst = function () {
+        console.info("head first!");
+    };
+
+    var test1 = new TestObject();//test1 已经变为了对象了
+    test1.footFun = function () {
+        console.info("footFun()");
+    };
+    console.info(typeof(test1));
+    console.info(typeof(TestObject));
+    test1.headFirst();
+    test1.footFun();
+
+
+    (function () {
+        Window.color = "red" ;
+        document.color = 'yellow';
+        var s1 = {color: 'blue' };
+        function printColor() {
+            console.info("color:"+this.color);
+        }
+        printColor.call();
+        printColor.call(Window);
+        printColor.call(document);
+        printColor.call(s1);
+    })();
+    /*相同点：这两个方法的作用是一样的。*/
+    (function () {
+        var algs = new Object();
+        algs.add = function () {
+            var result = 0;
+            var data = arguments;
+            if (data.length >= 2){
+                result = arguments[0] + arguments[1];
+            }
+            console.info("add:"+result);
+        }
+        algs.add(2,3);
+        var example = function (a,b) {
+            console.log("add() ==>"+(a+b));
+        }
+        //改变了this的指向
+        algs.add.call(example,4,5);
+        example(4,5);
+    })();
+
+    /*不同点：接收参数的方式不同。*/
+    (function () {
+        var pet = {
+            works:"................",
+            speak:function (say) {
+                console.log("speak:"+say+" "+this.works);
+            }
+        }
+        pet.speak("blake");
+        var teacher = {
+            works:"wang"
+        }
+        ////将this的指向改变成了teacher
+        pet.speak.call(teacher,"alice");
+    })();
+
+    (function () {
+        //apply()方法使用示例：
+        Window.color = "red" ;
+        document.color = 'yellow';
+        var s1 = {color: 'blue' };
+        function printColor() {
+            console.info("color apply:"+this.color);
+        }
+        printColor.apply();
+        printColor.apply(Window);
+        printColor.apply(s1);
+
+       var Pets = function (words) {
+           this.words = words;
+           this.speak = function () {
+               console.log("chinese "+this.words);
+           }
+       }
+       // var p = new Pets("Lee");
+       // p.speak();
+       
+       var Teacher = function (words) {
+           // Pets.call(this,words);
+           Pets.apply(this,arguments);
+       }
+
+       var t1 = new Teacher("alice");
+       t1.speak();
+    })();
+
+
+    var object = new Object();
+
+    object.inputAlgorithmObject = {
+        isNotNull: function (obj) {
+            if (obj == 0) {
+                return true;
+            }
+            if (obj == '') {
+                return true;
+            }
+            if (obj) {
+                return true;
+            }
+            return false;
+        },
+        specialTreatment: function (obj) {
+            if (object.inputAlgorithmObject.isNotNull(obj)) {
+                return obj;
+            }
+            return 0;
+        },
+        specialTreatmentArr:function () {
+            $.each(arguments,function (i,n) {
+                arguments[i] = object.inputAlgorithmObject.specialTreatment(n);
+            })
+        }
+    }
+
+
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>stack-java</artifactId>
+        <groupId>stack-java</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>other-office</artifactId>
+    <packaging>maven-plugin</packaging>
+    <name>other-office Maven Mojo</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <poi.version>3.9</poi.version>
+        <spring.version>4.3.20.RELEASE</spring.version>
+        <maven.address>D:\lib\maven</maven.address>
+        <pdfbox.version>2.0.14</pdfbox.version>
+        <!--<maven.address>C:\lib</maven.address>-->
+    </properties>
+
+    <dependencies>
+
+        <!-- 添加Servlet支持-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- eclipse  运行必须加的api-->
+        <!-- Javax Annotation -->
+		<dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <!-- 整合spring框架 -->
+        <!-- 包含Spring框架基本的核心工具类，Spring其它组件要都要使用到这个包里的类，是其它组件的基本核心； -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- springIoC（依赖注入）的基础实现，所有应用都要用到的，它包含访问配置文件、
+        创建和管理bean以及进行Inversion of Control / DependencyInjection（IoC/DI）操作相关的所有类； -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- spring提供在基础 IoC 功能上的扩展服务，此外还提供许多企业级服务的支持，
+        如邮件服务、任务调度、JNDI定位、EJB集成、远程访问、 缓存以及各种视图层框架的封装等 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- spring-context的扩展支持，包含支持缓存Cache（ehcache）、JCA、JMX、邮件服务（JavaMail、COS Mail）、
+        任务计划Scheduling（Timer、Quartz）方面的类。 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <!-- 包含Web应用开发时，用到Spring框架时所需的核心类，
+        包括自动载入WebApplicationContext特性的类、Struts与JSF集成类、文件上传的支持类、Filter类和大量工具辅助类 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <!-- spring 单元测试 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- mvn install:install-file -Dfile=D:\IdeaProjects\stack-java\other-office\src\main\lib\aspose-words\16.4.0\aspose-words-16.4.0.jar -DgroupId=com.zhou.aspose-words -DartifactId=aspose-words -Dversion=16.4.0 -Dpackaging=jar -->
+        <dependency>
+            <groupId>com.zhou.aspose-words</groupId>
+            <artifactId>aspose-words</artifactId>
+            <version>16.4.0</version>
+        </dependency>
+
+        <!-- mvn install:install-file -Dfile=D:\IdeaProjects\stack-java\other-office\src\main\lib\1.10\jacob.jar -DgroupId=com.zhou.jacob -DartifactId=jacob -Dversion=1.10 -Dpackaging=jar -->
+        <dependency>
+            <groupId>com.zhou.jacob</groupId>
+            <artifactId>jacob</artifactId>
+			<version>1.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+	 <!-- spring提供在基础 IoC 功能上的扩展服务，此外还提供许多企业级服务的支持，
+         <repository>
+            <id>com.e-iceblue</id>
+            <name>e-iceblue</name>
+            <url>http://repo.e-iceblue.com/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>AsposeJavaAPI</id>
+            <name>Aspose Java API</name>
+            <url>https://repository.aspose.com/repo/</url>
+        </repository>
+		-->
+       
+    </repositories>
+</project>

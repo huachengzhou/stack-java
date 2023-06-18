@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<note>
+    <to>George</to>
+    <from>
+        <title>zzz</title>
+        <title>yyy</title>
+        <title>ajax in action</title>
+    </from>
+    <heading id="xxx">Reminder</heading>
+    <body>Don't forget the meeting!</body>
+</note>

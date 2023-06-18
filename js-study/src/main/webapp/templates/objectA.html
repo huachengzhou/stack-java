@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="text-align: center;">
+<div th:include="css/cssBootStrap :: html"></div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2>objectA</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"> <a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    (function () {
+        //创建一个简单对象
+        var dog = {
+            name:"Benji",
+            talk:function () {
+                console.log("Woof, Woof !");
+            }
+        };
+        dog.talk();
+    })();
+
+
+    (function () {
+        var hero = {};
+        console.log(typeof(hero.breed));
+        hero.name = "Leonardo" ;
+        hero.sayName = function () {
+            return hero.name;
+        };
+        console.log(hero.sayName());
+        //删除一个属性
+        hero.removeName = function () {
+            delete hero.name;
+        };
+        hero.removeName();
+        console.log(hero.sayName());//已经没有属性了
+    })();
+
+
+    (function () {
+        //构造器方法创建函数
+        function Hero() {
+            this.oop = "Java" ;
+        }
+        //为了使用该函数创建对象 需要用到new 操作符
+        var hero = new Hero();
+        console.info(hero.oop);
+    })();
+    (function () {
+        //对上面的构造函数修改一下
+        function Hero(name) {
+            this.name = name;
+            this.oop = "C#";
+            this.whoAreYou = function () {
+                return "I'm " +this.name + " and I'm a " +this.oop;
+            };
+        }
+        var h1 = new Hero("霍金");
+        console.info(h1.whoAreYou());
+    })();
+
+    (function () {
+        // 内建对象
+
+        //一般分为三大类
+        //数据封装对象 Object Array Boolean Number 和 String
+        var o = new Object();
+        console.info(o.constructor) ; //构造器的引用
+        console.info(o.toString()) ; // 对象的描述 引用
+        console.info(o.valueOf()) ; // 对象的单值  描述
+        console.log(o.valueOf() == o); //简单对象实际上value of是等于它自身
+        var arr = new Array();//是一个用内建构造函数
+        //与 下面的文法 是等效的
+        var a = [] ;
+        arr[0] = Math.round(Math.random()) ;
+        arr[arr.length + 1] = Math.round(Math.random()*100);
+        console.log(arr);
+        arr.push(2,3);
+        console.log(arr);
+
+
+        //工具类 对象 Math Date RegExp
+        var date = new Date();
+        var str = date.getFullYear() +" "+ date.getMonth() + " "+date.getDay();
+        console.log(str);
+        str = date.getUTCFullYear() +" " + date.getUTCMonth()+" " +date.getUTCDay();
+        console.log(str);
+
+
+        //错误类 对象
+    })();
+
+    (function () {
+        //函数对象属性
+        function myFun(a) {
+            return a;
+        }
+        console.info(myFun.constructor);
+
+        //函数对象也有一个length属性
+        console.log(myFun.length);
+    })();
+
+    (function () {
+        //函数的原型
+        /**
+         * 每个函数的prototype 属性都指向了一个对象;
+         * 它只有在该函数是构造器时才会发生作用
+         * 该函数创建的所有对象都会持有一个该 prototype 属性的 引用,并可以将其当作自身的引用来使用
+         */
+
+        var ninja = {
+            name:"Ninja",
+            say:function () {
+                return "I'm a "+this.name;
+            }
+        };
+
+        function F() {
+
+        }
+        console.log(typeof(F.prototype));
+        console.log(ninja);
+        console.log(typeof ninja);
+        console.log(ninja.constructor);
+        F.prototype = ninja;
+        var baby = new F();
+        console.log(F.valueOf());
+        console.log(baby.name);
+    })();
+
+    (function () {
+        /**
+         * call()
+         * apply()
+         * 在JavaScript中,每个函数 都有call() 和apply() 两个方法
+         * 可以用它来触发函数
+         * 他们的另一个作用是 让一个对象前去借用 另一个对象的方法 并为己所用
+         */
+        var some_obj = {
+            name:"blake",
+            say:function (who) {
+                return "你好啊! "+who+" "+this.name;
+            }
+        }
+        console.log(some_obj.say("xxa"));
+
+        var my_obj = {name:"script run !"};
+
+        //显然 some_obj 的say() 适用于 my_obj ,在这种情况下我们试试say() 中的call() 方法
+        console.log(some_obj.say.call(my_obj," xxxok"));// 对象.方法.call(借用的对象,传入借用对象的参数);
+    })();
+
+    (function () {
+        // 参数 argument
+        function f2() {
+            return arguments;
+        }
+        console.log(f2(2,3,4,5));
+        var arr = f2(2,3,4,5);
+        console.log(arr);
+        console.log(arr[0]);
+    })();
+
+    (function () {
+        var ooa = function () {
+            var name = null;
+            var o = new Object();
+            o.setName = function (name_) {
+                name = name_;
+            };
+            o.getName = function () {
+                return name;
+            }
+            return o;
+        };
+        console.log(ooa());
+        ooa().setName("blake");
+        console.log(ooa().getName());
+    })();
+
+    (function () {
+        var a = Math.pow(2,3);
+        console.log("a:"+a);
+    })();
+
+
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+</script>
+</body>
+</html>

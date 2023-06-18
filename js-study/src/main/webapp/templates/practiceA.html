@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="text-align: center;">
+<div th:include="css/cssBootStrap :: html"></div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> 练习A </h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"> <a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    var object = new Object();
+
+    object.inputAlgorithmObject = {
+        isNotNull: function (obj) {
+            if (obj == 0) {
+                return true;
+            }
+            if (obj == '') {
+                return true;
+            }
+            if (obj) {
+                return true;
+            }
+            return false;
+        },
+        specialTreatment: function (obj) {
+            if (object.inputAlgorithmObject.isNotNull(obj)) {
+                return obj;
+            }
+            return 0;
+        },
+        specialTreatmentArr:function () {
+            var aa = arguments;
+            console.log(aa);
+            $.each(arguments,function (i,n) {
+                arguments[i] = object.inputAlgorithmObject.specialTreatment(n);
+            })
+        }
+    }
+
+    object.testA = function () {
+        var a = "" ;
+        var b = null;
+        var c = 22;
+        object.inputAlgorithmObject.specialTreatmentArr(a,b,c);
+        console.log(a);
+    }
+    object.testA();
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+</script>
+</body>
+</html>

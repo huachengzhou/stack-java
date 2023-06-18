@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <div th:include="css/cssBootStrap :: html"></div>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-12" style="margin-top:10px;">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12" style="margin-bottom:40px;">
+                <ul class="nav nav-tabs">
+                    <li><a th:href="@{/core/coreHome}" class="btn btn-default"><i class="fa fa-spinner fa-pulse"></i>首页</a></li>
+                    <li><a th:href="@{/core/exampleHome}" class="btn btn-default"><i class="fa fa-link"></i>例子学习主页</a></li>
+                    <li><a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-link"></i>js 主页</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

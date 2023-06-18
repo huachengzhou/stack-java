@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body style="text-align: center;">
+<div th:include="css/cssBootStrap :: html"></div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2>正则表达式</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"> <a th:href="@{/core/jsHome}" class="btn btn-default"><i class="fa fa-rotate-left"></i>返回</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    /**
+     *  正则表达式修饰符
+     *  修饰符	描述
+     *  i	    执行对大小写不敏感的匹配。
+     *  g	    执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
+     *  m	    执行多行匹配。
+     *  正则表达式模式
+     *  [abc]	查找方括号之间的任何字符。
+     *  [0-9]	查找任何从 0 至 9 的数字。
+     *  (x|y)	查找任何以 | 分隔的选项。
+     *  元字符是拥有特殊含义的字符：
+     *  \d	    查找数字。
+     *  \s	    查找空白字符。
+     *  \b	    匹配单词边界。
+     *  \uxxxx	查找以十六进制数 xxxx 规定的 Unicode 字符。
+     *  量词     描述
+     *  n+	    匹配任何包含至少一个 n 的字符串。
+     *  n*	    匹配任何包含零个或多个 n 的字符串
+     *  n?	    匹配任何包含零个或一个 n 的字符串。
+     **/
+
+    var regexA = new Object();
+    regexA.one = function () {
+        var text = "mom and dad and baby" ;
+        var pattern = /mom( and dad( and baby)?)?/gi ;
+        var matches = pattern.exec(text) ;
+        console.log("index:"+matches.index) ;//index 表示匹配项在字符串中的位置
+        console.log("input:"+matches.input) ;//input 表示应用正则表达式的字符串
+
+        console.info("");
+        console.info("0:"+matches[0]);
+        console.info("1:"+matches[1]);
+        console.info("2:"+matches[2]);
+    };
+
+    regexA.two = function () {
+        var pattern = /[a-z]/gi ;
+        var text = "aegdhssd093rhjdztzsdrhhdj^sxhfrsd&*zsdhsd" ;
+        console.info(text.replace(pattern,"_"));
+        text = "192.168.0.106" ;
+        pattern = /[0-9]n*./gi ;
+        console.log(text.replace(pattern,"()"));
+        text = "192.168.0.106" ;
+        pattern = /([0-9]n*.)n*([0-9]n*)n?/gi ;
+        console.log(text.replace(pattern,"(_)"));
+    };
+
+
+    $(function () {
+        regexA.one();
+        regexA.two();
+    });
+
+   /**
+   * @author:  zch
+   * 描述:数组判断
+   * @date:2018-08-07
+   **/
+    function isArray(value){
+        if (typeof Array.isArray === "function") {
+            return Array.isArray(value);
+        }else{
+            return Object.prototype.toString.call(value) === "[object Array]";
+        }
+    }
+</script>
+</body>
+</html>

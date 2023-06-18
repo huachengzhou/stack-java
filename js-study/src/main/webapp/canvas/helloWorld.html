@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:include="css/cssBootStrapOther :: html"></div>
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+</head>
+<body style="text-align: center;">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h2> canvas 第一个例子 </h2>
+        </div>
+
+        <canvas id="myCanvas1" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:20px;">
+        </canvas>
+
+        <canvas id="myCanvas2" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:50px;">
+        </canvas>
+
+        <canvas id="myCanvas3" class="panel panel-info col-sm-12 col-md-12 col-lg-12"
+                style="margin-top:10px;margin-bottom:10px;height:50px;">
+        </canvas>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <img style="display: none" id="scream" th:src="@{/images/img_the_scream.jpg}" width="256" height="256"/>
+            <canvas id="myCanvas" width="250" height="300" style="border:1px solid #d3d3d3;"></canvas>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <img id="B69B3AFB" th:src="@{/images/B69B3AFB.png}" width="256" height="256"/>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <canvas id="myCanvas4" width="1000px;" height="300px" style="border:1px solid #d3d3d3;"></canvas>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <img id="target" th:src="@{/images/201879100307926.jpg}" width="200" height="200"/>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <img id="target2" th:src="@{/images/201879100307926.jpg}" width="200" height="200"/>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <img id="target3" th:src="@{/images/100sh.jpg}" width="316" height="786"/>
+            <a href="javascript:void(0)" style="font-weight: bold; text-decoration: none; font-size: 16px;"
+               onclick="rotateRight('target3',90);">右转</a>
+            <a href="javascript:void(0)" style="font-weight: bold; font-size: 16px; text-decoration: none;"
+               onclick="rotateLeft('target3',90);">左转</a><br>
+        </div>
+
+        <img id="target4" th:src="@{/images/pig.jpg}" style="display: none" width="640" height="472.5"/>
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <canvas id="myCanvasTarget4" class="panel"
+                    style="margin-top:10px;margin-bottom:10px;height:200px;width: 600px;">
+            </canvas>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 panel panel-info">
+            <ul style="margin-top:20px;margin-right:30px;" class="fa-ul">
+                <li class="list-group-item"><a th:href="@{/core/jsHome}" class="btn btn-default"><i
+                        class="fa fa-rotate-left"></i>返回</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/assembly/plugins/jquery/rotate/jquery.rotate.min.js}"></script>
+<script type="text/javascript" th:src="@{/assembly/js/rotate.js}"></script>
+<script type="text/javascript">
+
+    var objObject = new Object();
+
+    objObject.testA = function () {
+        var c = document.getElementById('myCanvas2');
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = '#FF0000';
+        ctx.fillRect(0, 0, 150, 75);
+        //context.fillText(text,x,y,maxWidth);
+        /*
+        text	规定在画布上输出的文本。
+        x	    开始绘制文本的 x 坐标位置（相对于画布）。
+        y	    开始绘制文本的 y 坐标位置（相对于画布）。
+        maxWidth	可选。允许的最大文本宽度，以像素计。
+        * */
+    };
+
+    /**
+     * moveTo(x,y) 定义线条开始坐标
+     * lineTo(x,y) 定义线条结束坐标
+     * stroke() 绘制
+     */
+    objObject.testB = function () {
+        var c = document.getElementById('myCanvas3');
+        var ctx = c.getContext("2d");
+        ctx.moveTo(0, 0);
+        ctx.lineTo(100, 0);
+        ctx.lineWidth = 20;
+        ctx.stroke();
+    };
+
+    /**
+     * fillRect() 方法绘制“已填色”的矩形。默认的填充颜色是黑色。
+     * drawImage() 方法在画布上绘制图像、画布或视频。
+     */
+    objObject.testC = function () {
+        var c = document.getElementById('myCanvas');
+        var ctx = c.getContext("2d");
+        var img = document.getElementById('scream');
+        var x = 10, y = 10;
+        ctx.drawImage(img, x, y);
+        ctx.translate(-80, 60); //中心点
+        ctx.rotate(-90);
+        ctx.fillRect(50, 20, 100, 50);
+    };
+
+    /**
+     * 获取坐标
+     */
+    objObject.testD = function () {
+        var img = document.getElementById('B69B3AFB');
+        $(img).bind("click mouseover", function (e) {
+            var width = $(this).innerWidth();
+            var height = $(this).innerHeight();
+            // console.log(width+" "+height);
+
+            //获取事件的当前位置的x轴和y轴
+            var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
+            var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
+            // console.log(xx +" "+yy);
+
+            //对象当前x轴和y轴坐标
+            var x = $(this).offset().left;
+            var y = $(this).offset().top;
+            // console.log(x+" "+y);
+
+        });
+    };
+
+    objObject.testE = function () {
+        var c = document.getElementById('myCanvas4');
+        var oldY = null;
+        var isdown = false;
+        $(c).mousedown(function (e) {
+            isdown = true;
+            oldY = e.clientY;
+        });
+        var ctx = c.getContext("2d");
+        var img = document.getElementById('B69B3AFB');
+        ctx.drawImage(img, 10, 10);
+        $("html").mousemove(function (e) {
+            if (isdown) {
+                console.log('deg' + (e.clientY - oldY));
+                $(c).rotate({angle: (e.clientY - oldY)});
+            }
+        });
+        $("html").mouseup(function (e) {
+            isdown = false;
+            oldY = null;
+        });
+    };
+
+    /**
+     * 单击旋转
+     **/
+    objObject.testF = function () {
+        window.onload = function () {
+            var current = 0;
+            document.getElementById('target').onclick = function () {
+                current = (current + 90) % 360;
+                this.style.transform = 'rotate(' + current + 'deg)';
+            }
+        };
+    };
+
+    /**
+     * 鼠标旋转
+     **/
+    objObject.testG = function () {
+        var oldY = null;
+        var isdown = false;
+        $("#target2").mousedown(function (e) {
+            isdown = true;
+            oldY = e.clientY;
+            console.log(oldY);
+        });
+        $("html").mousemove(function (e) {
+            if (isdown) {
+                console.log('deg' + (e.clientY - oldY));
+                $("#target2").css("transform", "rotate(" + (e.clientY - oldY) + "deg)");
+            }
+        });
+        $("html").mouseup(function (e) {
+            isdown = false;
+            oldY = null;
+        });
+    };
+
+    objObject.testH = function () {
+        document.getElementById('myCanvasTarget4');
+        var id = "myCanvasTarget4";
+        var oldY = null;
+        var isdown = false;
+        $("#" + id).mousedown(function (e) {
+            isdown = true;
+            oldY = e.clientY;
+        });
+        $("html").mousemove(function (e) {
+            if (isdown) {
+                var i = 1;
+                console.log('deg' + (e.clientY - oldY));
+                var canvas = document.getElementById('myCanvasTarget4');
+                var ctx1 = canvas.getContext('2d');
+                var image1 = new Image();
+                image1.onload = function () {
+                    var xpos = canvas.width / 2;
+                    var ypos = canvas.height / 2;
+                    //原图
+                    ctx1.drawImage(image1, xpos - image1.width / 2, ypos - image1.height / 2);
+                    ctx1.save();
+                    //旋转图
+                    ctx1.translate(xpos, ypos);
+                    ctx1.rotate(e.clientY - oldY);//旋转度数
+                    ctx1.translate(-xpos, -ypos);
+                    ctx1.drawImage(image1, xpos - image1.width / 2, ypos - image1.height / 2);
+                    ctx1.restore();
+                };
+                var _ctx = '[[${application.ctx}]]';
+                image1.src = _ctx + "/images/pig.jpg";
+            }
+        });
+        $("html").mouseup(function (e) {
+            isdown = false;
+            oldY = null;
+        });
+    };
+
+    $(document).ready(function () {
+        objObject.testA();
+        objObject.testB();
+        objObject.testC();
+        objObject.testD();
+        objObject.testE();
+        objObject.testF();
+        objObject.testG();
+        objObject.testH();
+    });
+
+    /**
+     *
+     canvas.save();//锁画布(为了保存之前的画布状态)
+     canvas.translate(10, 10);//把当前画布的原点移到(10,10),后面的操作都以(10,10)作为参照点，默认原点为(0,0)
+     drawScene(canvas);
+     canvas.restore();//把当前画布返回（调整）到上一个save()状态之前
+
+     canvas.save();//锁画布(为了保存之前的画布状态)
+     canvas.translate(160, 10);//把当前画布的原点移到(160,10),后面的操作都以(160,10)作为参照点，
+     canvas.clipRect(10, 10, 90, 90);//这里的真实坐标为左上(170,170)、右下(250,250)
+     canvas.clipRect(30, 30, 70, 70, Region.Op.DIFFERENCE);
+     drawScene(canvas);
+     canvas.restore();
+     *
+     **/
+
+</script>
+
+</body>
+</html>

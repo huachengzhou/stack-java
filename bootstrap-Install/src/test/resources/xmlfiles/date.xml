@@ -1,0 +1,11 @@
+<note>
+    <date>
+        <day>08</day>
+        <month>08</month>
+        <year>2008</year>
+    </date>
+    <to>George</to>
+    <from>John</from>
+    <heading>Reminder</heading>
+    <body>Don't forget the meeting!</body>
+</note>

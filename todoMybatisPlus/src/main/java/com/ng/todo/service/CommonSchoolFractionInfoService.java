@@ -1,9 +1,13 @@
 package com.ng.todo.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ng.todo.entity.CommonSchoolFractionInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * <p>
@@ -20,4 +24,8 @@ public interface CommonSchoolFractionInfoService extends IService<CommonSchoolFr
      * @return
      */
     List<String> findDataUuidList(Integer year);
+
+    List<String> findUuidList(BaseMapper baseMapper, Wrapper queryWrapper);
+
+    <T> void removeEntity(Class<T> aClass, Consumer<T> settingBisFieldValue, QueryWrapper queryWrapper) throws Exception;
 }

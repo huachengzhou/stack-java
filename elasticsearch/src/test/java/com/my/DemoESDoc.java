@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.*;
@@ -20,7 +22,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : chengdu
@@ -67,6 +71,34 @@ public class DemoESDoc {
 
 
         System.out.println("DemoESDoc.testCreateDoc");
+    }
+
+    /**
+     * 批量添加
+     */
+    @Test
+    public void testCreateBatchDoc()throws Exception{
+        RestHighLevelClient client = getEsHighInit();
+        // 批量插入数据
+        BulkRequest bulkRequest = new BulkRequest();
+        int initialCapacity = 20;
+        ObjectMapper mapper = new ObjectMapper();
+        for (int i = 0; i < initialCapacity; i++) {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setAddress("中国");
+            userEntity.setAge(RandomUtil.randomInt(1,100));
+            userEntity.setId(RandomUtil.randomInt(1000000,2000000)+i);
+            userEntity.setName(RandomUtil.randomString(5));
+            userEntity.setUuid(UUID.fastUUID().toString());
+            userEntity.setBirthday(new Date());
+            bulkRequest.add(new IndexRequest().index(INDEX_NAME).id(userEntity.getId().toString()).source(mapper.writeValueAsString(userEntity),XContentType.JSON));
+        }
+        BulkResponse bulk = client.bulk(bulkRequest, RequestOptions.DEFAULT);
+        System.out.println(bulk.toString());
+        System.out.println(bulk.getTook());
+        System.out.println(bulk.getItems());
+
+        client.close();
     }
 
 

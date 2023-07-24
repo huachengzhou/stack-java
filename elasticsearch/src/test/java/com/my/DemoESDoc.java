@@ -3,6 +3,10 @@ package com.my;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.my.entity.JobEntity;
+import com.my.entity.MovieEntity;
+import com.my.study.JobEntityData;
+import com.my.study.MovieData;
 import lombok.Data;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -132,6 +136,12 @@ public class DemoESDoc {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
             System.out.println(sourceAsString);
         }
+    }
+
+    @Test
+    public void testOne(){
+        List<MovieEntity> movieEntityList = MovieData.getMovieEntityList();
+        List<JobEntity> jobEntityList = JobEntityData.getJobEntityList();
     }
 
     /**

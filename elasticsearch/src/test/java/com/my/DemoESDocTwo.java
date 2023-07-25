@@ -1,7 +1,12 @@
 package com.my;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.entity.MovieEntity;
 import com.my.study.MovieData;
@@ -11,15 +16,13 @@ import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.MultiGetItemResponse;
-import org.elasticsearch.action.get.MultiGetRequest;
-import org.elasticsearch.action.get.MultiGetResponse;
+import org.elasticsearch.action.get.*;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.ShardSearchFailure;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.*;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
@@ -40,6 +43,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +53,7 @@ import java.util.Map;
  * @date :  2023/7/23-07
  **/
 public class DemoESDocTwo {
+    //https://blog.csdn.net/weixin_45417821/category_11079267.html
 
     private static final int CONNECT_TIMEOUT = 700000;
     private static final int SOCKET_TIMEOUT = 600000;
@@ -109,14 +114,19 @@ public class DemoESDocTwo {
         client.close();
     }
 
+    /**
+     * 批量用id获取
+     *
+     * @throws Exception
+     */
     @Test
     public void testGetBatchDoc() throws Exception {
         RestHighLevelClient client = getEsHighInit();
         MultiGetRequest request = new MultiGetRequest();
         Field[] declaredFields = MovieEntity.class.getDeclaredFields();
-        String[] includes = new String[declaredFields.length] ;
+        String[] includes = new String[declaredFields.length];
         for (int i = 0; i < declaredFields.length; i++) {
-            Field field = declaredFields[i] ;
+            Field field = declaredFields[i];
             includes[i] = field.getName();
         }
         String[] excludes = Strings.EMPTY_ARRAY;
@@ -128,12 +138,26 @@ public class DemoESDocTwo {
             request.add(new MultiGetRequest.Item(INDEX_NAME, movieEntity.getId()).fetchSourceContext(fetchSourceContext));
         }
         MultiGetResponse response = client.mget(request, RequestOptions.DEFAULT);
-        MultiGetItemResponse[] responses = response.getResponses();
-        if (responses.length != 0){
-
+        for (MultiGetItemResponse itemResponse : response.getResponses()) {
+            GetResponse responseResponse = itemResponse.getResponse();
+            Map<String, Object> source = responseResponse.getSource();
+            if (source.isEmpty()) {
+                continue;
+            }
+            CopyOptions copyOptions = new CopyOptions();
+            copyOptions.setIgnoreCase(false);
+            MovieEntity movieEntity = BeanUtil.mapToBean(source, MovieEntity.class, false, copyOptions);
+            if (movieEntity != null) {
+                System.out.println(movieEntity);
+            }
         }
     }
 
+    /**
+     * 查询索引下的所有文档
+     *
+     * @throws Exception
+     */
     @Test
     public void testGetAllDoc() throws Exception {
         RestHighLevelClient client = getEsHighInit();
@@ -148,10 +172,46 @@ public class DemoESDocTwo {
         //匹配查询的结果集
         SearchHit[] searchHits = hits.getHits();
         for (SearchHit hit : searchHits) {
-            String sourceAsString = hit.getSourceAsString();
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            System.out.println(sourceAsString);
+            CopyOptions copyOptions = new CopyOptions();
+            copyOptions.setIgnoreCase(false);
+            MovieEntity movieEntity = BeanUtil.mapToBean(sourceAsMap, MovieEntity.class, false, copyOptions);
+            if (movieEntity != null) {
+                System.out.println(movieEntity);
+            }
         }
+    }
+
+    /**
+     * 批量更新
+     * @throws Exception
+     */
+    @Test
+    public void testUpdateBatchDoc() throws Exception {
+        RestHighLevelClient client = getEsHighInit();
+        BulkRequest bulkRequest = new BulkRequest();
+        List<MovieEntity> movieEntityList = MovieData.getMovieEntityList();
+        int initialCapacity = movieEntityList.size();
+        for (int i = 0; i < initialCapacity; i++) {
+            MovieEntity movieEntity = movieEntityList.get(i);
+            if (StrUtil.isNotBlank(movieEntity.getRate())) {
+                if (NumberUtil.isNumber(movieEntity.getRate())) {
+                    BigDecimal bigDecimal = NumberUtil.add(movieEntity.getRate(), "0.1");
+                    movieEntity.setRate(bigDecimal.setScale(2).toPlainString());
+                }
+            }
+            UpdateRequest request = new UpdateRequest();
+            request.index(INDEX_NAME);
+            request.doc(BeanUtil.beanToMap(movieEntity)).id(movieEntity.getId());
+            bulkRequest.add(request);
+            bulkRequest.add(request);
+        }
+        BulkResponse bulk = client.bulk(bulkRequest, RequestOptions.DEFAULT);
+        System.out.println(bulk.toString());
+        for (BulkItemResponse item : bulk.getItems()) {
+            System.out.println(" 第:" + item.getItemId() + " execute:" + item.getOpType() + " 索引:" + item.getIndex() + " type:" + item.getType() + " id:" + item.getId());
+        }
+        client.close();
     }
 
 

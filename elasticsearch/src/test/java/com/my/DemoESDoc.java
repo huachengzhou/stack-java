@@ -1,28 +1,27 @@
 package com.my;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.my.entity.JobEntity;
-import com.my.entity.MovieEntity;
-import com.my.study.JobEntityData;
-import com.my.study.MovieData;
 import lombok.Data;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.lucene.search.TotalHits;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.ShardSearchFailure;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.*;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.client.indices.GetIndexResponse;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -30,16 +29,14 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,41 +78,213 @@ public class DemoESDoc {
         ObjectMapper mapper = new ObjectMapper();
         String userJson = mapper.writeValueAsString(userEntity);
         indexRequest.source(userJson, XContentType.JSON);
-
         IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
+        client.close();
         System.out.println(indexResponse.toString());
-
-
         System.out.println("DemoESDoc.testCreateDoc");
     }
 
     /**
-     * 批量添加
+     * 修改文档 单个字段修改
+     *
+     * @throws Exception
      */
     @Test
-    public void testCreateBatchDoc() throws Exception {
+    public void testUpdateOneFieldDoc() throws Exception {
+        final String id = "10002";
         RestHighLevelClient client = getEsHighInit();
-        // 批量插入数据
-        BulkRequest bulkRequest = new BulkRequest();
-        int initialCapacity = 20;
-        ObjectMapper mapper = new ObjectMapper();
-        for (int i = 0; i < initialCapacity; i++) {
+        GetRequest getRequest = new GetRequest(INDEX_NAME, id);
+        getRequest.fetchSourceContext(new FetchSourceContext(false)); //禁用fetching _source.
+        boolean exists = client.exists(getRequest, RequestOptions.DEFAULT);
+        if (!exists) {
             UserEntity userEntity = new UserEntity();
-            userEntity.setAddress("中国");
+            userEntity.setAddress("中国-四川-成都");
             userEntity.setAge(RandomUtil.randomInt(1, 100));
-            userEntity.setId(RandomUtil.randomInt(1000000, 2000000) + i);
+            userEntity.setId(Integer.valueOf(id));
             userEntity.setName(RandomUtil.randomString(5));
-            userEntity.setUuid(UUID.fastUUID().toString());
+            userEntity.setUuid(id);
             userEntity.setBirthday(new Date());
-            bulkRequest.add(new IndexRequest().index(INDEX_NAME).id(userEntity.getId().toString()).source(mapper.writeValueAsString(userEntity), XContentType.JSON));
+            IndexRequest indexRequest = new IndexRequest();
+            indexRequest.index(INDEX_NAME).id(userEntity.getUuid());
+            indexRequest.source(new ObjectMapper().writeValueAsString(userEntity), XContentType.JSON);
+            client.index(indexRequest, RequestOptions.DEFAULT);
         }
-        BulkResponse bulk = client.bulk(bulkRequest, RequestOptions.DEFAULT);
-        System.out.println(bulk.toString());
-        System.out.println(bulk.getTook());
-        System.out.println(bulk.getItems());
+        GetRequest request = new GetRequest();
+        request.index(INDEX_NAME).id(id);
+        GetResponse response = client.get(request, RequestOptions.DEFAULT);
+        Map<String, Object> objectMap = response.getSourceAsMap();
+        CopyOptions copyOptions = new CopyOptions();
+        copyOptions.setIgnoreCase(false);
+        UserEntity movieEntity = BeanUtil.mapToBean(objectMap, UserEntity.class, false, copyOptions);
+        movieEntity.setAge(999);
 
+        //创建修改请求
+        UpdateRequest updateRequest = new UpdateRequest();
+        //参数1表示所要修改的索引，参数2指定修改文档的id值
+        updateRequest.index(INDEX_NAME).id(id);
+        //设置请求体，对数据进行修改，参数2表示字段名，参数3表示所要修改的值
+        updateRequest.doc(XContentType.JSON, "age", "25");
+        //得到响应结果
+        UpdateResponse updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
+        System.out.println(updateResponse.getResult());
+        //关闭ES客户端
         client.close();
     }
+
+    /**
+     * 修改文档   整个对象修改
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testUpdateDoc() throws Exception {
+        final String id = "10002";
+        RestHighLevelClient client = getEsHighInit();
+        GetRequest getRequest = new GetRequest(INDEX_NAME, id);
+        getRequest.fetchSourceContext(new FetchSourceContext(false)); //禁用fetching _source.
+        boolean exists = client.exists(getRequest, RequestOptions.DEFAULT);
+        if (!exists) {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setAddress("中国-四川-成都");
+            userEntity.setAge(RandomUtil.randomInt(1, 100));
+            userEntity.setId(Integer.valueOf(id));
+            userEntity.setName(RandomUtil.randomString(5));
+            userEntity.setUuid(id);
+            userEntity.setBirthday(new Date());
+            IndexRequest indexRequest = new IndexRequest();
+            indexRequest.index(INDEX_NAME).id(userEntity.getUuid());
+            indexRequest.source(new ObjectMapper().writeValueAsString(userEntity), XContentType.JSON);
+            client.index(indexRequest, RequestOptions.DEFAULT);
+        }
+        GetRequest request = new GetRequest();
+        request.index(INDEX_NAME).id(id);
+        GetResponse response = client.get(request, RequestOptions.DEFAULT);
+        Map<String, Object> objectMap = response.getSourceAsMap();
+        CopyOptions copyOptions = new CopyOptions();
+        copyOptions.setIgnoreCase(false);
+        UserEntity movieEntity = BeanUtil.mapToBean(objectMap, UserEntity.class, false, copyOptions);
+        movieEntity.setAge(999);
+
+        //创建修改请求
+        UpdateRequest updateRequest = new UpdateRequest();
+        //参数1表示所要修改的索引，参数2指定修改文档的id值
+        updateRequest.index(INDEX_NAME).id(id);
+        Map<String, Object> stringObjectMap = BeanUtil.beanToMap(movieEntity);
+        updateRequest.doc(JSONUtil.toJsonStr(stringObjectMap), XContentType.JSON);
+        //得到响应结果
+        UpdateResponse updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
+        System.out.println(updateResponse.getResult());
+        //关闭ES客户端
+        client.close();
+    }
+
+    /**
+     * 使用 index 修改
+     * @throws Exception
+     */
+    @Test
+    public void testIndexUpdateDoc() throws Exception {
+        final String id = "10002";
+        RestHighLevelClient client = getEsHighInit();
+        GetRequest getRequest = new GetRequest(INDEX_NAME, id);
+        getRequest.fetchSourceContext(new FetchSourceContext(false)); //禁用fetching _source.
+        boolean exists = client.exists(getRequest, RequestOptions.DEFAULT);
+        if (!exists) {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setAddress("中国-四川-成都");
+            userEntity.setAge(RandomUtil.randomInt(1, 100));
+            userEntity.setId(Integer.valueOf(id));
+            userEntity.setName(RandomUtil.randomString(5));
+            userEntity.setUuid(id);
+            userEntity.setBirthday(new Date());
+            IndexRequest indexRequest = new IndexRequest();
+            indexRequest.index(INDEX_NAME).id(userEntity.getUuid());
+            indexRequest.source(new ObjectMapper().writeValueAsString(userEntity), XContentType.JSON);
+            client.index(indexRequest, RequestOptions.DEFAULT);
+        }
+        GetRequest request = new GetRequest();
+        request.index(INDEX_NAME).id(id);
+        GetResponse response = client.get(request, RequestOptions.DEFAULT);
+        CopyOptions copyOptions = new CopyOptions();
+        copyOptions.setIgnoreCase(false);
+        UserEntity movieEntity = BeanUtil.mapToBean(response.getSourceAsMap(), UserEntity.class, false, copyOptions);
+        movieEntity.setAge(200);
+
+        // Method : Use index API to update
+        IndexRequest indexRequest = new IndexRequest(INDEX_NAME);
+        indexRequest.id(id);
+//        indexRequest.source("age", 200);
+        Map<String, Object> stringObjectMap = BeanUtil.beanToMap(movieEntity);
+        indexRequest.source(JSONUtil.toJsonStr(stringObjectMap),XContentType.JSON) ;
+        IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
+        System.out.println("response id: " + indexResponse.getId());
+        System.out.println(indexResponse.getResult().name());
+
+        //关闭ES客户端
+        client.close();
+    }
+
+    /**
+     * 获取文档
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetCreateDoc() throws Exception {
+        final String id = "10001";
+        RestHighLevelClient client = getEsHighInit();
+        GetRequest getRequest = new GetRequest(INDEX_NAME, id);
+        getRequest.fetchSourceContext(new FetchSourceContext(false)); //禁用fetching _source.
+        boolean exists = client.exists(getRequest, RequestOptions.DEFAULT);
+        if (!exists) {
+            //没有就创建一个
+            UserEntity userEntity = new UserEntity();
+            userEntity.setAddress("中国-四川-成都");
+            userEntity.setAge(RandomUtil.randomInt(1, 100));
+            userEntity.setId(Integer.valueOf(id));
+            userEntity.setName(RandomUtil.randomString(5));
+            userEntity.setUuid(id);
+            userEntity.setBirthday(new Date());
+            IndexRequest indexRequest = new IndexRequest();
+            indexRequest.index(INDEX_NAME).id(userEntity.getUuid());
+            //向ES插入数据，必须将其转换成JSON格式
+            ObjectMapper mapper = new ObjectMapper();
+            String value = mapper.writeValueAsString(userEntity);
+            //可以理解为携带的JSON格式的请求体
+            indexRequest.source(value, XContentType.JSON);
+            IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
+            System.out.println(indexResponse.toString());
+            System.out.println(indexResponse.getResult()); //CREATED
+        }
+        GetRequest request = new GetRequest();
+        request.index(INDEX_NAME).id(id);
+        GetResponse response = client.get(request, RequestOptions.DEFAULT);
+        Map<String, Object> objectMap = response.getSourceAsMap();
+        CopyOptions copyOptions = new CopyOptions();
+        copyOptions.setIgnoreCase(false);
+        UserEntity movieEntity = BeanUtil.mapToBean(objectMap, UserEntity.class, false, copyOptions);
+        System.out.println(movieEntity);
+
+    }
+
+    /**
+     * 根据id 检查文档是否创建
+     */
+    @Test
+    public void testCheckDoc() throws Exception {
+        RestHighLevelClient client = getEsHighInit();
+        final String id = "10001";
+        GetRequest getRequest = new GetRequest(
+                INDEX_NAME, //索引
+                id);    //文档id
+        getRequest.fetchSourceContext(new FetchSourceContext(false)); //禁用fetching _source.
+        //显式指定将返回的存储字段
+//        getRequest.storedFields("_none_");
+        boolean exists = client.exists(getRequest, RequestOptions.DEFAULT);
+        client.close();
+        System.out.println("id:" + id + " " + exists);
+    }
+
 
     @Test
     public void testGetAllDoc() throws Exception {
@@ -138,12 +307,6 @@ public class DemoESDoc {
         }
     }
 
-    @Test
-    public void testOne(){
-        List<MovieEntity> movieEntityList = MovieData.getMovieEntityList();
-        List<JobEntity> jobEntityList = JobEntityData.getJobEntityList();
-    }
-
     /**
      * @param : client
      * @description : 查询文档————matchAll
@@ -156,15 +319,12 @@ public class DemoESDoc {
         searchRequest.source(searchSourceBuilder);
         //可以指定type,也可以不指定，不指定查所有
 //        searchRequest.types("my_type");
-
         SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-
         //查询信息
         RestStatus status = searchResponse.status();
         TimeValue took = searchResponse.getTook();
         Boolean terminatedEarly = searchResponse.isTerminatedEarly();
         boolean timedOut = searchResponse.isTimedOut();
-
         int totalShards = searchResponse.getTotalShards();
         int successfulShards = searchResponse.getSuccessfulShards();
         int failedShards = searchResponse.getFailedShards();
@@ -237,7 +397,8 @@ public class DemoESDoc {
                         return requestConfigBuilder;
                     }
                 });
-        return new RestHighLevelClient(http);
+        RestHighLevelClient restHighLevelClient = new RestHighLevelClient(http);
+        return restHighLevelClient;
     }
 
     @Data

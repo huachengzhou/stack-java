@@ -116,14 +116,14 @@ public class DemoESDoc {
         CopyOptions copyOptions = new CopyOptions();
         copyOptions.setIgnoreCase(false);
         UserEntity movieEntity = BeanUtil.mapToBean(objectMap, UserEntity.class, false, copyOptions);
-        movieEntity.setAge(999);
+        movieEntity.setAge(25);
 
         //创建修改请求
         UpdateRequest updateRequest = new UpdateRequest();
         //参数1表示所要修改的索引，参数2指定修改文档的id值
         updateRequest.index(INDEX_NAME).id(id);
         //设置请求体，对数据进行修改，参数2表示字段名，参数3表示所要修改的值
-        updateRequest.doc(XContentType.JSON, "age", "25");
+        updateRequest.doc(XContentType.JSON, "age", movieEntity.getAge());
         //得到响应结果
         UpdateResponse updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
         System.out.println(updateResponse.getResult());
@@ -180,6 +180,7 @@ public class DemoESDoc {
 
     /**
      * 使用 index 修改
+     *
      * @throws Exception
      */
     @Test
@@ -215,11 +216,10 @@ public class DemoESDoc {
         indexRequest.id(id);
 //        indexRequest.source("age", 200);
         Map<String, Object> stringObjectMap = BeanUtil.beanToMap(movieEntity);
-        indexRequest.source(JSONUtil.toJsonStr(stringObjectMap),XContentType.JSON) ;
+        indexRequest.source(JSONUtil.toJsonStr(stringObjectMap), XContentType.JSON);
         IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
         System.out.println("response id: " + indexResponse.getId());
         System.out.println(indexResponse.getResult().name());
-
         //关闭ES客户端
         client.close();
     }

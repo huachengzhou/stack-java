@@ -28,6 +28,7 @@ public class DemoESIndex {
     public static final int CONNECT_TIMEOUT = 700000;
     public static final int SOCKET_TIMEOUT = 600000;
     public static final int CONNECTION_REQUEST_TIMEOUT = 100000;
+    public static final String TEST_INDEX = "test_index";
     private final Logger logger = LoggerFactory.getLogger(getClass());
     public static final String LOCALHOST = "localhost";
     public static final int PORT = 9200;
@@ -58,7 +59,7 @@ public class DemoESIndex {
     public void testCreateIndex() throws Exception {
         RestHighLevelClient client = getRestHighLevelClient();
         IndicesClient indicesClient = client.indices();
-        String uuid = UUID.fastUUID().toString();
+        String uuid = TEST_INDEX;
         System.out.println("索引创建:" + uuid);
 
         CreateIndexRequest request = new CreateIndexRequest(uuid);
@@ -78,7 +79,7 @@ public class DemoESIndex {
         RestHighLevelClient client = getEsHighInit();
         IndicesClient indicesClient = client.indices();
 
-        String[] strings = {"40a1313b-e86b-4860-b55f-b7ddae7a6a6a", "cfa2dbdf-681d-4231-98a6-7ecae12fc594"};
+        String[] strings = { TEST_INDEX};
         GetIndexRequest getIndexRequest = new GetIndexRequest(strings);
 
         GetIndexResponse getIndexResponse = indicesClient.get(getIndexRequest, RequestOptions.DEFAULT);
@@ -96,7 +97,7 @@ public class DemoESIndex {
     public void testDeleteIndex()throws Exception{
         RestHighLevelClient client = getEsHighInit();
         IndicesClient indicesClient = client.indices();
-        String[] strings = {"40a1313b-e86b-4860-b55f-b7ddae7a6a6a", "cfa2dbdf-681d-4231-98a6-7ecae12fc594"};
+        String[] strings = {TEST_INDEX, "1877770f-0bf0-410e-9a53-3cd4eb0d3731"};
         DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest();
         deleteIndexRequest.indices(strings);
         AcknowledgedResponse response = indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);

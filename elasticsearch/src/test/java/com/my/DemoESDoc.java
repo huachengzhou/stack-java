@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
+import org.elasticsearch.action.bulk.BulkItemResponse;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -24,8 +27,14 @@ import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.script.Script;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -38,13 +47,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * @author : chengdu
  * @date :  2023/7/23-07
  **/
 public class DemoESDoc {
-
+    //https://blog.csdn.net/qq_42322632/article/details/120778010
     private static final int CONNECT_TIMEOUT = 700000;
     private static final int SOCKET_TIMEOUT = 600000;
     private static final int CONNECTION_REQUEST_TIMEOUT = 100000;
@@ -265,6 +275,130 @@ public class DemoESDoc {
         UserEntity movieEntity = BeanUtil.mapToBean(objectMap, UserEntity.class, false, copyOptions);
         System.out.println(movieEntity);
 
+    }
+
+    /**
+     * 条件更新文档 简单
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testOneConditionUpdateDoc() throws Exception {
+        /*
+        https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
+        https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-using.html
+        */
+        RestHighLevelClient client = getEsHighInit();
+        UpdateByQueryRequest request = new UpdateByQueryRequest(INDEX_NAME);
+        request.setQuery(new TermQueryBuilder("age", 91));
+        //这里 只更新 address
+//        request.setScript(new Script("ctx._source['address']='中国四川成都1';"));
+        //条件更新  两个字段
+        StringJoiner stringJoiner = new StringJoiner(";");
+        stringJoiner.add("ctx._source['address']='中国四川成都1'");
+        stringJoiner.add("ctx._source['name']='李世民'");
+        Script script = new Script(stringJoiner.toString());
+        request.setScript(script);
+        BulkByScrollResponse bulkByScrollResponse = client.updateByQuery(request, RequestOptions.DEFAULT);
+        long updated = bulkByScrollResponse.getUpdated();
+        System.out.println("updated:" + updated);
+    }
+
+    /**
+     * 条件更新文档  范围 更新
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testConditionUpdateDoc() throws Exception {
+        RestHighLevelClient client = getEsHighInit();
+        UpdateByQueryRequest request = new UpdateByQueryRequest(INDEX_NAME);
+        //范围查询
+        RangeQueryBuilder queryBuilder = QueryBuilders.rangeQuery("age");
+        queryBuilder.gte(1).lte(99);
+        //查询年龄大于等于18，并且小于等于50的记录
+        request.setQuery(queryBuilder);
+        //条件更新  两个字段
+        StringJoiner stringJoiner = new StringJoiner(";");
+        stringJoiner.add("ctx._source['address']='中国四川成都2'");
+        stringJoiner.add("ctx._source['name']='李元吉'");
+        Script script = new Script(stringJoiner.toString());
+        request.setScript(script);
+        BulkByScrollResponse bulkByScrollResponse = client.updateByQuery(request, RequestOptions.DEFAULT);
+        long updated = bulkByScrollResponse.getUpdated();
+        System.out.println("updated:" + updated);
+    }
+
+
+    /**
+     * 条件更新文档  模糊查询 更新
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testConditionWildcardQueryUpdateDoc() throws Exception {
+        RestHighLevelClient client = getEsHighInit();
+        UpdateByQueryRequest request = new UpdateByQueryRequest(INDEX_NAME);
+        //范围查询
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.wildcardQuery("name", "*李*"));
+        //模糊查询 李
+        request.setQuery(queryBuilder);
+        //条件更新  两个字段
+        StringJoiner stringJoiner = new StringJoiner(";");
+        stringJoiner.add("ctx._source['address']='中国四川成都3'");
+        stringJoiner.add("ctx._source['name']='李元霸'");
+        Script script = new Script(stringJoiner.toString());
+        request.setScript(script);
+        BulkByScrollResponse bulkByScrollResponse = client.updateByQuery(request, RequestOptions.DEFAULT);
+        long updated = bulkByScrollResponse.getUpdated();
+        System.out.println("updated:" + updated);
+    }
+
+
+    @Test
+    public void testMoreQueryUpdateDoc() throws Exception {
+        RestHighLevelClient client = getEsHighInit();
+        {
+            // 批量插入数据
+//            BulkRequest bulkRequest = new BulkRequest();
+//            ObjectMapper mapper = new ObjectMapper();
+//            String[] strings = new String[] {"小李","小明","小军"} ;
+//            for (int i = 1; i <= 100; i++) {
+//                UserEntity userEntity = new UserEntity() ;
+//                userEntity.setId(i);
+//                userEntity.setAge(RandomUtil.randomInt(10,100));
+//                userEntity.setUuid(UUID.fastUUID().toString());
+//                userEntity.setName(strings[RandomUtil.randomInt(0,strings.length)]);
+//                userEntity.setAddress("地球");
+//                userEntity.setBirthday(new Date());
+//                bulkRequest.add(new IndexRequest().index(INDEX_NAME).id(userEntity.getId().toString()).source(mapper.writeValueAsString(userEntity), XContentType.JSON));
+//            }
+//            BulkResponse bulk = client.bulk(bulkRequest, RequestOptions.DEFAULT);
+//            System.out.println(bulk.toString());
+//            for (BulkItemResponse item : bulk.getItems()) {
+//                System.out.println(" 第:" + item.getItemId() + " execute:" + item.getOpType() + " 索引:" + item.getIndex() + " type:" + item.getType() + " id:" + item.getId());
+//            }
+        }
+        UpdateByQueryRequest request = new UpdateByQueryRequest(INDEX_NAME);
+        //名称 使用like最好
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery()
+//                .must(QueryBuilders.termQuery("name", "小军"))
+//                .must(QueryBuilders.termQuery("id", "1"))
+                .must(QueryBuilders.rangeQuery("age")
+                        .gte(1)
+                        .lte(100))
+                ;
+        request.setQuery(queryBuilder);
+        //条件更新  两个字段
+        StringJoiner stringJoiner = new StringJoiner(";");
+        stringJoiner.add("ctx._source['address']='中国四川成都4'");
+        stringJoiner.add("ctx._source['name']='李君廓 1'");
+        Script script = new Script(stringJoiner.toString());
+        request.setScript(script);
+        BulkByScrollResponse bulkByScrollResponse = client.updateByQuery(request, RequestOptions.DEFAULT);
+        long updated = bulkByScrollResponse.getUpdated();
+        System.out.println("updated:" + updated);
     }
 
     /**

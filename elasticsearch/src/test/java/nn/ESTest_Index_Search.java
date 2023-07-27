@@ -1,4 +1,4 @@
-package test;
+package nn;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;

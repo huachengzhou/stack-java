@@ -27,10 +27,7 @@ import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 import org.elasticsearch.rest.RestStatus;
@@ -45,9 +42,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.io.IOException;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 /**
  * @author : chengdu
@@ -356,6 +354,11 @@ public class DemoESDoc {
     }
 
 
+    /**
+     * 多条件更新
+     *
+     * @throws Exception
+     */
     @Test
     public void testMoreQueryUpdateDoc() throws Exception {
         RestHighLevelClient client = getEsHighInit();
@@ -387,8 +390,7 @@ public class DemoESDoc {
 //                .must(QueryBuilders.termQuery("id", "1"))
                 .must(QueryBuilders.rangeQuery("age")
                         .gte(1)
-                        .lte(100))
-                ;
+                        .lte(100));
         request.setQuery(queryBuilder);
         //条件更新  两个字段
         StringJoiner stringJoiner = new StringJoiner(";");
@@ -399,6 +401,108 @@ public class DemoESDoc {
         BulkByScrollResponse bulkByScrollResponse = client.updateByQuery(request, RequestOptions.DEFAULT);
         long updated = bulkByScrollResponse.getUpdated();
         System.out.println("updated:" + updated);
+    }
+
+    /**
+     * 更新 多个包含id的集合数据
+     * @throws Exception
+     */
+    @Test
+    public void testTwoIdUpdate() throws Exception {
+        RestHighLevelClient client = getEsHighInit();
+
+        //查询 id集合
+        String[] strings = {"98", "99", "100"};
+
+        BiFunction<RestHighLevelClient, String[], SearchHit[]> biFunction = new BiFunction<RestHighLevelClient, String[], SearchHit[]>() {
+            @Override
+            public SearchHit[] apply(RestHighLevelClient restHighLevelClient, String[] strings) {
+                IdsQueryBuilder idsQueryBuilder = new IdsQueryBuilder();
+                idsQueryBuilder.addIds(strings);
+                SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
+                SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+                searchSourceBuilder.query(idsQueryBuilder);
+
+                searchRequest.source(searchSourceBuilder);
+                try {
+                    SearchResponse response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+                    SearchHits searchHits = response.getHits();
+                    SearchHit[] searchHitsHits = searchHits.getHits();
+                    return searchHitsHits;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return new SearchHit[]{};
+            }
+        };
+
+        SearchHit[] searchHitsHits = biFunction.apply(client, strings);
+
+        BiConsumer<RestHighLevelClient, String[]> biConsumer = new BiConsumer<RestHighLevelClient, String[]>() {
+            @Override
+            public void accept(RestHighLevelClient restHighLevelClient, String[] ids) {
+                // 批量插入数据
+                BulkRequest bulkRequest = new BulkRequest();
+                ObjectMapper mapper = new ObjectMapper();
+                String[] strings = new String[]{"小李", "小明", "小军"};
+                try {
+                    for (int i = 0; i < ids.length; i++) {
+                        UserEntity userEntity = new UserEntity();
+                        userEntity.setId(Integer.valueOf(ids[i]));
+                        userEntity.setAge(RandomUtil.randomInt(10, 100));
+                        userEntity.setUuid(UUID.fastUUID().toString());
+                        userEntity.setName(strings[RandomUtil.randomInt(0, strings.length)]);
+                        userEntity.setAddress("地球");
+                        userEntity.setBirthday(new Date());
+                        bulkRequest.add(new IndexRequest().index(INDEX_NAME).id(userEntity.getId().toString()).source(mapper.writeValueAsString(userEntity), XContentType.JSON));
+                    }
+                    BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+                    System.out.println(bulk.toString());
+                    for (BulkItemResponse item : bulk.getItems()) {
+                        System.out.println(" 第:" + item.getItemId() + " execute:" + item.getOpType() + " 索引:" + item.getIndex() + " type:" + item.getType() + " id:" + item.getId());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //获取id集合
+        if (searchHitsHits.length == 0) {
+            biConsumer.accept(client, strings);
+        }else {
+            for (SearchHit  searchHit:searchHitsHits){
+                System.out.println(JSONUtil.toJsonStr(searchHit.getSourceAsMap()));
+            }
+        }
+
+        //修改集合
+        UpdateByQueryRequest request = new UpdateByQueryRequest(INDEX_NAME);
+        IdsQueryBuilder idsQueryBuilder = new IdsQueryBuilder();
+        idsQueryBuilder.addIds(strings);
+        request.setQuery(idsQueryBuilder);
+        //条件更新  两个字段
+        StringJoiner stringJoiner = new StringJoiner(";");
+        String text = UUID.fastUUID().toString();
+        System.out.println(text);
+        stringJoiner.add(String.format("ctx._source['address']='%s'",text));
+//        stringJoiner.add("ctx._source['address']='东南亚'");
+        stringJoiner.add("ctx._source['name']='侯军集'");
+        Script script = new Script(stringJoiner.toString());
+        request.setScript(script);
+        BulkByScrollResponse bulkByScrollResponse = client.updateByQuery(request, RequestOptions.DEFAULT);
+        long updated = bulkByScrollResponse.getUpdated();
+        System.out.println("updated:" + updated);
+
+
+//        client.close();
+//        client = getEsHighInit();
+
+        //再次查询
+        SearchHit[] hits = biFunction.apply(client, strings);
+        for (SearchHit  searchHit:hits){
+            System.out.println(JSONUtil.toJsonStr(searchHit.getSourceAsMap()));
+        }
+
     }
 
     /**

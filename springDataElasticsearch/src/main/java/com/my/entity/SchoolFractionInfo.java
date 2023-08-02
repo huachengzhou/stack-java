@@ -229,6 +229,44 @@ public class SchoolFractionInfo implements Serializable {
         this.gmtModified = gmtModified;
     }
 
+    public static final String ID = "id";
+
+    public static final String UUID = "uuid";
+
+    public static final String YEAR = "year";
+
+    public static final String FRACTION = "fraction";
+
+    public static final String MAX_SCORE = "max_score";
+
+    public static final String MIN_SCORE = "min_score";
+
+    public static final String ENROLLMENT = "enrollment";
+
+    public static final String PROVINCE = "province";
+
+    public static final String TYPE = "type";
+
+    public static final String PRIMARY_CLASSIFICATION = "primary_classification";
+
+    public static final String METHOD = "method";
+
+    public static final String SPECIALITY = "speciality";
+
+    public static final String SOURCE_TEXT = "source_text";
+
+    public static final String SCHOOL = "school";
+
+    public static final String BATCH = "batch";
+
+    public static final String TYPE_ENUM = "type_enum";
+
+    public static final String REMARK = "remark";
+
+    public static final String GMT_CREATED = "gmt_created";
+
+    public static final String GMT_MODIFIED = "gmt_modified";
+
     @Override
     public String toString() {
         return "SchoolFractionInfo{" +

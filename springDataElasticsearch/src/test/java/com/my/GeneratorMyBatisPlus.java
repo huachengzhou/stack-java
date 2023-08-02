@@ -88,6 +88,8 @@ public class GeneratorMyBatisPlus {
                         // 阶段1：Entity实体类策略配置
                         .addTablePrefix("tb")
                         .entityBuilder()
+                        .enableFileOverride()//覆盖已有文件
+                        .enableColumnConstant()//开启生成字段常量
                         // 开启生成实体时生成字段注解。
                         // 会在实体类的属性前，添加[@TableField("nickname")]
                         .enableTableFieldAnnotation()

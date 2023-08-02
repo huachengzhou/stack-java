@@ -1,0 +1,5 @@
+16:14:10.482 [DEBUG] [main] [testng.demo.LoggerTest] debug message
+16:14:10.484 [INFO ] [main] [testng.demo.LoggerTest] info message
+16:14:10.485 [WARN ] [main] [testng.demo.LoggerTest] warning message
+16:14:10.485 [ERROR] [main] [testng.demo.LoggerTest] error message
+16:14:10.485 [WARN ] [main] [testng.demo.LoggerTest] login message

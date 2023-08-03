@@ -3,6 +3,7 @@ package com.my.test;
 
 import cn.hutool.core.collection.CollUtil;
 import com.my.jpa.Goods;
+import com.my.jpa.GoodsSQLServer;
 import com.my.mapper.custom.GoodsMapper;
 import com.my.ElasticsearchApplication;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class GoodsMapperTest {
 
     @Test
     public void testFindAll(){
-        List<Goods> goodsList = goodsMapper.findAll();
+        List<GoodsSQLServer> goodsList = goodsMapper.findAll();
         if (CollUtil.isNotEmpty(goodsList)){
 
         }

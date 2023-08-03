@@ -1,7 +1,7 @@
 package com.my.mapper.custom;
 
 
-import com.my.jpa.Goods;
+import com.my.jpa.GoodsSQLServer;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +18,5 @@ public interface GoodsMapper {
     /**
      * 查询所有
      */
-    List<Goods> findAll();
+    List<GoodsSQLServer> findAll();
 }

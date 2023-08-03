@@ -31,9 +31,8 @@ import java.util.Date;
 // 指定当前类对象对应哪个ES中的索引
 // 如果索引不存在
 @Document(indexName = "goods")
-public class Goods {
+public class GoodsSQLServer {
 
-    //https://www.cnblogs.com/tanghaorong/p/16365684.html
 
     /**
      * 商品编号
@@ -85,11 +84,12 @@ public class Goods {
     private Integer status;
 
     /**
+     * sqlServer 只能是Date
      * 商品创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Field(type = FieldType.Date, format = DateFormat.date, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDate createTime;
+    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
 
 

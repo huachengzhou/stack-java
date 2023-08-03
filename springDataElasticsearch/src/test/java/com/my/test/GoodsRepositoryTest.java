@@ -1,6 +1,8 @@
 package com.my.test;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.my.jpa.Goods;
+import com.my.jpa.GoodsSQLServer;
 import com.my.mapper.custom.GoodsMapper;
 import com.my.repository.GoodsRepository;
 import com.my.ElasticsearchApplication;
@@ -13,7 +15,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * ElasticsearchTest测试
@@ -29,17 +35,21 @@ public class GoodsRepositoryTest {
     private GoodsMapper goodsMapper;
 
 
-
-
     /**
-     * 导入测试数据,从mysql中导入测试数据至es
+     * 导入测试数据,从sql中导入测试数据至es
      */
     @Test
     public void importAllData() {
         // 查询所有数据
-        List<Goods> lists = goodsMapper.findAll();
+        List<GoodsSQLServer> serverList = goodsMapper.findAll();
+        List<Goods> goodsList = serverList.stream().map(obj -> {
+            Goods goods = new Goods();
+            BeanUtil.copyProperties(obj,goods,"createTime");
+            goods.setCreateTime(obj.getCreateTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            return goods;
+        }).collect(Collectors.toList());
         // 保存所有数据只ES中
-        goodsRepository.saveAll(lists);
+        goodsRepository.saveAll(goodsList);
         System.out.println("ok");
     }
 
@@ -48,7 +58,7 @@ public class GoodsRepositoryTest {
      */
     @Test
     public void save() {
-        Goods goods = new Goods(1L, "Apple iPhone 13 ProMax 5G全网通手机", new BigDecimal(8999), 100, 1, "手机", "Apple", 0, new Date());
+        Goods goods = new Goods(1L, "Apple iPhone 13 ProMax 5G全网通手机", new BigDecimal(8999), 100, 1, "手机", "Apple", 0, LocalDate.now());
         goodsRepository.save(goods);
     }
 
@@ -58,9 +68,9 @@ public class GoodsRepositoryTest {
     @Test
     public void saveAll() {
         List<Goods> goodsList = new ArrayList<>();
-        goodsList.add(new Goods(2L, "title2", new BigDecimal(12), 1, 1, "category2", "brandName2", 0, new Date()));
-        goodsList.add(new Goods(3L, "title3", new BigDecimal(12), 1, 1, "category3", "brandName3", 0, new Date()));
-        goodsList.add(new Goods(4L, "title4", new BigDecimal(12), 1, 1, "category4", "brandName4", 0, new Date()));
+        goodsList.add(new Goods(2L, "title2", new BigDecimal(12), 1, 1, "category2", "brandName2", 0, LocalDate.now()));
+        goodsList.add(new Goods(3L, "title3", new BigDecimal(12), 1, 1, "category3", "brandName3", 0, LocalDate.now()));
+        goodsList.add(new Goods(4L, "title4", new BigDecimal(12), 1, 1, "category4", "brandName4", 0, LocalDate.now()));
         goodsRepository.saveAll(goodsList);
     }
 

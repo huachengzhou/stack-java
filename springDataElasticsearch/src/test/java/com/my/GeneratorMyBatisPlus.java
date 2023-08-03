@@ -27,7 +27,7 @@ public class GeneratorMyBatisPlus {
     /**
      * 数据库用户名
      */
-    private static final String USERNAME = "sa";
+    private static final String USERNAME = "zch";
     /**
      * 数据库密码
      */

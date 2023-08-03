@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author zch
- * @since 2023-08-02
+ * @since 2023-08-03
  */
 @TableName("tb_school_fraction_info")
 public class SchoolFractionInfo implements Serializable {

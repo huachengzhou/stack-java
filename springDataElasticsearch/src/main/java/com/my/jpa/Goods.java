@@ -86,9 +86,13 @@ public class Goods {
     /**
      * 商品创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     //@Field(type = FieldType.Date, format = DateFormat.basic_date_time)
-    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
+//    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd")
     private Date createTime;
+
+
+
 }
 

@@ -18,6 +18,20 @@ CREATE TABLE tb_school_fraction_info (
   remark varchar(255)  DEFAULT NULL ,
   gmt_created datetime DEFAULT NULL ,
   gmt_modified datetime DEFAULT NULL
-
-
 )  ;
+
+
+CREATE TABLE goods (
+  id int identity(1,1) not null primary key,
+  title varchar(300)  DEFAULT NULL,
+  price decimal(22,0) DEFAULT NULL,
+  stock int   DEFAULT NULL,
+  saleNum int DEFAULT NULL,
+  createTime datetime DEFAULT NULL,
+  categoryName varchar(600)  DEFAULT NULL,
+  brandName varchar(300)  DEFAULT NULL,
+  spec varchar(600)  DEFAULT NULL,
+  status int DEFAULT NULL
+);
+
+

@@ -34,4 +34,23 @@ public class MyBatisPlusUtils {
         return uuidList;
     }
 
+    /**
+     * 获取uuid
+     *
+     * @param baseMapper
+     * @param queryWrapper
+     * @return
+     */
+    public static List<String> findBusinessList(BaseMapper baseMapper, QueryWrapper queryWrapper, String businessId) {
+        List<Map<String, Object>> mapList = baseMapper.selectMaps(queryWrapper);
+        if (CollUtil.isEmpty(mapList)) {
+            return new ArrayList<>(0);
+        }
+        List<String> uuidList = new ArrayList<>();
+        mapList.stream().forEach(stringObjectMap -> {
+            uuidList.add(String.valueOf(stringObjectMap.get(businessId)));
+        });
+        return uuidList;
+    }
+
 }

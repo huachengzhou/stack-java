@@ -38,6 +38,7 @@ public class GoodsRepositoryBaseTest {
 
     /**
      * from+size 浅分页
+     * 注意：es是基于分片的，假设有3个分片，from=100，size=10。则会根据排序规则从3个分片中各取回100条数据数据，然后汇总成300条数据后选择最前边的10条数据
      */
     @Test
     public void testPageIndex()throws Exception{
@@ -47,6 +48,8 @@ public class GoodsRepositoryBaseTest {
             System.out.println(goods);
         }
     }
+
+
 
 
 

@@ -30,7 +30,7 @@ import java.util.Date;
 @NoArgsConstructor         // 无参构造
 // 指定当前类对象对应哪个ES中的索引
 // 如果索引不存在
-@Document(indexName = "goods")
+@Document(indexName = "index_goods")
 public class GoodsSQLServer {
 
 

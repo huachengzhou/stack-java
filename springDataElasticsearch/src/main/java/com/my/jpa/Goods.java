@@ -29,8 +29,8 @@ import java.util.Date;
 @AllArgsConstructor        // 全参构造
 @NoArgsConstructor         // 无参构造
 // 指定当前类对象对应哪个ES中的索引
-// 如果索引不存在
-@Document(indexName = "goods")
+// 如果索引不存在  type 实际设置了没啥用  还是用的默认_doc 因为高版本已经删除这个特性了
+@Document(indexName = "index_goods",type = "goods")
 public class Goods {
 
     //https://www.cnblogs.com/tanghaorong/p/16365684.html
@@ -87,8 +87,8 @@ public class Goods {
     /**
      * 商品创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Field(type = FieldType.Date, format = DateFormat.date, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Field(type = FieldType.Date, format = DateFormat.date, pattern = "yyyy-MM-dd")
     private LocalDate createTime;
 
 

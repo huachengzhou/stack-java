@@ -9,6 +9,9 @@ import com.my.jpa.Goods;
 import com.my.jpa.GoodsSQLServer;
 import com.my.mapper.custom.GoodsMapper;
 import com.my.repository.GoodsRepository;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -265,8 +268,200 @@ public class GoodsRepositoryBaseTest {
         }
         if (CollUtil.isNotEmpty(goodsList)) {
             goodsRepository.saveAll(goodsList);
-
         }
     }
+
+    /**
+     * 匹配所有  分页查询
+     */
+    @Test
+    public void searchSimple() {
+        PageRequest pageRequest = PageRequest.of(1, 10);
+        QueryBuilder queryBuilder = QueryBuilders.matchAllQuery();
+        Page<Goods> goodsPage = goodsRepository.search(queryBuilder, pageRequest);
+        System.out.println(goodsPage.getTotalElements());
+        System.out.println(goodsPage.getTotalPages());
+        System.out.println(goodsPage.getSize());
+        List<Goods> goodsList = goodsPage.getContent();
+        for (Goods goods : goodsList) {
+            System.out.println(goods);
+        }
+    }
+
+    /**
+     * matchQuery 匹配查询：matchQuery可以简单理解为mysql中的like，因为在elasticsearch中使用matchQuery查询时，
+     * 他会对查询的field进行分词。当然我们进行查询的这个field的mapping必须是text类型
+     */
+    @Test
+    public void matchQuery() {
+        //必须把 type = FieldType.Text 表示分词模式
+        QueryBuilder queryBuilder = QueryBuilders.matchQuery("brandName","苹");
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+
+    /**
+     * matchPhraseQuery短语搜索：相当于sql的=查询，与matchQuery的区别在于，matchPhraseQuery查询不会被分词，
+     * 而是直接以一个短语的形式查询，而如果你在创建索引所使用的field的value中没有这么一个短语（顺序无差，且连接在一起），那么将查询不出任何结果。
+     */
+    @Test
+    public void matchPhraseQuery(){
+        QueryBuilder queryBuilder = QueryBuilders.matchPhraseQuery("categoryName","魅族");
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+    /**
+     * termQuery等值搜索：相当于sql语句中的“=”，
+     * 使用这个搜索一般是对索引中keyword的mapping进行等值搜索。
+     * term query 属于过滤器查询，可以处理数字（numbers）、布尔值（Booleans）、日期（dates）以及文本（text）
+     */
+    @Test
+    public void termQuery(){
+//        QueryBuilder queryBuilder = QueryBuilders.termQuery("saleNum","2");
+        QueryBuilder queryBuilder = QueryBuilders.termsQuery("saleNum","2","8");
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+    /**
+     * 组合（多条件）查询：boolQuery 组合查询条件：
+     * boolQuery用来将搜索的条件进行组合，即将多个组合条件组合在一起，
+     * 常用的几种组合方式有
+     * must（and，必须匹配）、should(or，或者)、mustNot(!=，必须不匹配)
+     */
+    @Test
+    public void boolQuery(){
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        queryBuilder.must(QueryBuilders.matchQuery("title","苹果"));
+        queryBuilder.must(QueryBuilders.termsQuery("saleNum","2","8"));
+        System.out.println(queryBuilder.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+
+    @Test
+    public void boolShouldQuery(){
+        //唯一不同的是es不是like  title 字段是分词的  比like范围更广
+        //select * from goods where 1=1 and saleNum in (2,8) and (title like '%苹果%' or title like '%三星%')
+        BoolQueryBuilder orBuild = QueryBuilders.boolQuery();
+        orBuild.should(QueryBuilders.matchQuery("title","苹果"));
+        orBuild.should(QueryBuilders.matchQuery("title","三星"));
+
+        BoolQueryBuilder andBuild = QueryBuilders.boolQuery();
+        andBuild.must(QueryBuilders.termsQuery("saleNum","2","8"));
+
+        andBuild.must(orBuild) ;
+        System.out.println(andBuild.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(andBuild);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+    /**
+     * rangeQuery，range query可以处理数字（numbers）、日期（dates）以及字符串，不过字符串还是不要用范围查询的好，效率会很低
+     */
+    @Test
+    public void rangeQuery(){
+        //select * from goods where 1=1 and saleNum >= 2 and saleNum <= 3
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        queryBuilder.must(QueryBuilders.rangeQuery("saleNum").from("2").to("3"));
+        System.out.println(queryBuilder.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+    /**
+     * 大于
+     */
+    @Test
+    public void test_gt(){
+        //select * from goods where 1=1 and saleNum > 7
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        queryBuilder.must(QueryBuilders.rangeQuery("saleNum").gt("7"));
+        System.out.println(queryBuilder.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+
+    /**
+     * 大于等于
+     */
+    @Test
+    public void test_gte(){
+        //select * from goods where 1=1 and saleNum >= 7
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        queryBuilder.must(QueryBuilders.rangeQuery("saleNum").gte("7"));
+        System.out.println(queryBuilder.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+    /**
+     * 小于
+     */
+    @Test
+    public void test_lt(){
+        //select * from goods where 1=1 and saleNum < 6
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        queryBuilder.must(QueryBuilders.rangeQuery("saleNum").lt("6"));
+        System.out.println(queryBuilder.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+    /**
+     * 小于等于
+     */
+    @Test
+    public void test_lte(){
+        //select * from goods where 1=1 and saleNum <= 6
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        queryBuilder.must(QueryBuilders.rangeQuery("saleNum").lte("6"));
+        System.out.println(queryBuilder.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(queryBuilder);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+    @Test
+    public void moreMust(){
+        BoolQueryBuilder and1 = QueryBuilders.boolQuery();
+        and1.must(QueryBuilders.rangeQuery("saleNum").lte("6"));
+
+        BoolQueryBuilder and2 = QueryBuilders.boolQuery();
+        and2.should(QueryBuilders.matchQuery("title","苹果"));
+
+        QueryBuilder qb = QueryBuilders.boolQuery().must(and1).must(and2);
+        System.out.println(qb.toString());
+        Iterable<Goods> goodsIterable = goodsRepository.search(qb);
+        for (Goods goods : goodsIterable) {
+            System.out.println(goods);
+        }
+    }
+
+
+    //https://blog.csdn.net/yuhui123999/article/details/105202140/
 
 }

@@ -44,6 +44,7 @@ public class Goods {
 
     /**
      * 商品标题
+     * ik_max_word 是一个中文分词器
      */
     @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String title;
@@ -67,15 +68,16 @@ public class Goods {
     private Integer saleNum;
 
     /**
-     * 商品分类
+     * 商品分类 Keyword 不能够分词
      */
     @Field(type = FieldType.Keyword)
     private String categoryName;
 
     /**
-     * 商品品牌
+     * 商品品牌 可以分词
+     * 未指定分词模式
      */
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Text)
     private String brandName;
 
     /**

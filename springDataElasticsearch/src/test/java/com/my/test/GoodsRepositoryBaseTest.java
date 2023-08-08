@@ -37,7 +37,8 @@ public class GoodsRepositoryBaseTest {
 
     @Autowired
     private GoodsRepository goodsRepository;
-
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     /**
      * from+size 浅分页
@@ -161,6 +162,24 @@ public class GoodsRepositoryBaseTest {
     @Test
     public void deleteAll() {
         goodsRepository.deleteAll();
+    }
+
+    /**
+     * 导入测试数据,从sql中导入测试数据至es
+     */
+    @Test
+    public void importAllData() {
+        // 查询所有数据
+        List<GoodsSQLServer> serverList = goodsMapper.findAll();
+        List<Goods> goodsList = serverList.stream().map(obj -> {
+            Goods goods = new Goods();
+            BeanUtil.copyProperties(obj,goods,"createTime");
+            goods.setCreateTime(obj.getCreateTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            return goods;
+        }).collect(Collectors.toList());
+        // 保存所有数据只ES中
+        goodsRepository.saveAll(goodsList);
+        System.out.println("ok");
     }
 
 

@@ -33,7 +33,6 @@ import java.util.Date;
 @Document(indexName = "index_goods",type = "goods")
 public class Goods {
 
-    //https://www.cnblogs.com/tanghaorong/p/16365684.html
 
     /**
      * 商品编号

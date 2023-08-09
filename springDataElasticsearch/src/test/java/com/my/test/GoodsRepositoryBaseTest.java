@@ -483,4 +483,7 @@ public class GoodsRepositoryBaseTest {
 
     //https://blog.csdn.net/yuhui123999/article/details/105202140/
 
+
+    //https://blog.csdn.net/xaccpJ2EE/article/details/129282292?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-129282292-blog-105202140.235^v38^pc_relevant_anti_vip_base&spm=1001.2101.3001.4242.2&utm_relevant_index=4
+
 }

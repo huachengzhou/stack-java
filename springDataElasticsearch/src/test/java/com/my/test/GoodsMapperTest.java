@@ -28,5 +28,13 @@ public class GoodsMapperTest {
 
         }
     }
+    /*
+    *
+    @TargetDataSource(name = DataSourceNames.SECOND)
+    @Override
+    public SysUser findUserBySecondDb(long id) {
+        return this.baseMapper.selectById(id);
+    }
+    * */
 
 }

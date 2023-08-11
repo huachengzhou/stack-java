@@ -29,7 +29,7 @@ public class IMsSchoolInfoServiceTest {
 
     @Test
     public void saveMsSchoolInfo() {
-        int initialCapacity = 20;
+        int initialCapacity = 2000;
         List<MsSchoolInfo> msSchoolInfoList = new ArrayList<>(initialCapacity);
         for (int i = 0; i < initialCapacity; i++) {
             MsSchoolInfo msSchoolInfo = new MsSchoolInfo();

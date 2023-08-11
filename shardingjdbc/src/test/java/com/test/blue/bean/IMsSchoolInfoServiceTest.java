@@ -1,6 +1,7 @@
 package com.test.blue.bean;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.lang.UUID;
@@ -28,7 +29,7 @@ public class IMsSchoolInfoServiceTest {
 
     @Test
     public void saveMsSchoolInfo() {
-        int initialCapacity = 2000;
+        int initialCapacity = 20;
         List<MsSchoolInfo> msSchoolInfoList = new ArrayList<>(initialCapacity);
         for (int i = 0; i < initialCapacity; i++) {
             MsSchoolInfo msSchoolInfo = new MsSchoolInfo();

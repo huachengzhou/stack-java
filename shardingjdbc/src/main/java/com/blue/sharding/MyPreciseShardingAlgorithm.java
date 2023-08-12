@@ -39,6 +39,9 @@ public class MyPreciseShardingAlgorithm implements PreciseShardingAlgorithm, Ran
 
     @Override
     public Collection<String> doSharding(Collection collection, RangeShardingValue rangeShardingValue) {
+        if (collection != null){
+
+        }
         return null;
     }
 }

@@ -29,7 +29,7 @@ public class IMsSchoolInfoServiceTest {
 
     @Test
     public void saveMsSchoolInfo() {
-        int initialCapacity = 2000;
+        int initialCapacity = 200;
         List<MsSchoolInfo> msSchoolInfoList = new ArrayList<>(initialCapacity);
         for (int i = 0; i < initialCapacity; i++) {
             MsSchoolInfo msSchoolInfo = new MsSchoolInfo();
@@ -38,9 +38,10 @@ public class IMsSchoolInfoServiceTest {
             msSchoolInfo.setName(UUID.fastUUID().toString());
             msSchoolInfo.setUuid(UUID.randomUUID().toString());
             msSchoolInfo.setCreator("zch");
-            msSchoolInfo.setNumber(RandomUtil.randomInt());
-            DateTime dateTime = RandomUtil.randomDate(new Date(), DateField.HOUR, 1, 22);
-            msSchoolInfo.setBaseDate(dateTime.toJdkDate());
+            msSchoolInfo.setNumber(RandomUtil.randomInt(10,10000));
+//            DateTime dateTime = RandomUtil.randomDate(new Date(), DateField.HOUR, 1, 22);
+//            msSchoolInfo.setBaseDate(dateTime.toJdkDate());
+            msSchoolInfo.setBaseDate(new Date());
             msSchoolInfoList.add(msSchoolInfo);
         }
         iMsSchoolInfoService.saveBatch(msSchoolInfoList);

@@ -13,8 +13,8 @@ public class MyPreciseShardingAlgorithmTest {
         for (int i = 0; i < 20; i++) {
             int two = i % 2;
 //            System.out.println("i:" + i + " % 2:" + two);
-//            System.out.println("i:" + i + " % 3:" + i % 3);
-            System.out.println("i:" + i + " % 3:" + i % 4);
+            System.out.println("i:" + i + " % 3:" + i % 3);
+//            System.out.println("i:" + i + " % 3:" + i % 4);
         }
     }
 

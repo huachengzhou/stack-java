@@ -59,6 +59,7 @@ public class IMsSchoolInfoServiceTest {
         for (MsSchoolInfo msSchoolInfo : infoList) {
             System.out.println(JSONUtil.toJsonStr(msSchoolInfo));
         }
+        System.out.println("size:"+infoList.size());
     }
 
 }

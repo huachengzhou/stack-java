@@ -19,7 +19,6 @@
         <module>install-httpClient</module>
         <module>instal-plug-jsoup</module>
         <module>install-plug-htmlUnit</module>
-        <module>install-plug-akka</module>
         <module>install-plug-testng</module>
         <module>tree</module>
         <module>bootstrap-Install</module>

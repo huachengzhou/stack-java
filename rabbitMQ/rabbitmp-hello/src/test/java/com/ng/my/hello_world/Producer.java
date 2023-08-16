@@ -1,4 +1,4 @@
-package com.ng.my.v1;
+package com.ng.my.hello_world;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;

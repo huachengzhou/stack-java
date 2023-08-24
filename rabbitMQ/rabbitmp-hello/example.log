@@ -1,0 +1,236 @@
+INFO main com.ng.my.v1.Consumer - 等待接收消息....
+INFO main com.ng.my.v1.Consumer - 等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-vh74vNZCWas0aKQP_yh2gQ
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO main com.ng.my.v1.Consumer - 等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-WQDTX0L0hBj55zHeEkJ7fA
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - consumerTag:amq.ctag-WQDTX0L0hBj55zHeEkJ7fA
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - envelope:
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - properties:
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - message:dssjsd
+INFO main com.ng.my.v1.Consumer - 等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-ZtR_HIdf6oVWKBiQtyQu3w
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-ZtR_HIdf6oVWKBiQtyQu3w
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:dssjsd
+INFO main com.ng.my.v1.Consumer - 等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-uLgT54jVXrseEqHQF08shw
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":9}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-uLgT54jVXrseEqHQF08shw
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":6}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:dssjsd
+INFO main com.ng.my.v1.Consumer - 2023-08-15 18:11:01等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-3was3cDOgZlMFgYTwpsJ9A
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":9}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-3was3cDOgZlMFgYTwpsJ9A
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":6}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:dssjsd
+INFO main com.ng.my.v1.Consumer - 2023-08-15 18:11:42等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:11:42
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-tRR6gTgErvJKb5-CGMOfFQ
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":9}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:11:42
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-tRR6gTgErvJKb5-CGMOfFQ
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":6}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:dssjsd
+INFO main com.ng.my.v1.Consumer - 2023-08-15 18:12:01等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:12:01
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-cDTP5nur7qjeHeyuuUGMMw
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":9}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:12:01
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-cDTP5nur7qjeHeyuuUGMMw
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":6}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:dssjsd
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:13:10
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - consumerTag:amq.ctag-cDTP5nur7qjeHeyuuUGMMw
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - properties:{"headers":{"er":{"bytes":[115,104,115,100,104]}},"deliveryMode":1,"bodySize":14}
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - message:sdhsdsdjsjd000
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - 
+INFO main com.ng.my.v1.Consumer - 2023-08-15 18:14:17等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:14:17
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-5mPKNiPAnk2Nphh8Wtd2bQ
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":9}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:ddhsdjsdj
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:14:17
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-5mPKNiPAnk2Nphh8Wtd2bQ
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"a1":{"bytes":[115,100,115,100,106]}},"deliveryMode":1,"bodySize":6}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:dssjsd
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:14:17
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-5mPKNiPAnk2Nphh8Wtd2bQ
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{"er":{"bytes":[115,104,115,100,104]}},"deliveryMode":1,"bodySize":14}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:sdhsdsdjsjd000
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO main com.ng.my.v1.Consumer - 2023-08-15 18:15:36等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:16:29
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-L_L0KfVBlItljbAkMxFB8A
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"headers":{},"deliveryMode":1,"bodySize":5}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:shsdj
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO main com.ng.my.v1.Consumer - 2023-08-15 18:23:18等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:23:28
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-yEPDWjm-AbGMRBfvFpU-SQ
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"bodySize":16}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:hello world 2538
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:24:27
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - consumerTag:amq.ctag-yEPDWjm-AbGMRBfvFpU-SQ
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - properties:{"bodySize":16}
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - message:hello world 1350
+INFO pool-1-thread-5 com.ng.my.v1.Consumer - 
+INFO main com.ng.my.v1.Producer - 2023-08-15 18:24:27发送消息!
+INFO pool-1-thread-6 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:24:54
+INFO pool-1-thread-6 com.ng.my.v1.Consumer - consumerTag:amq.ctag-yEPDWjm-AbGMRBfvFpU-SQ
+INFO main com.ng.my.v1.Producer - message:hello world 2714
+INFO pool-1-thread-6 com.ng.my.v1.Consumer - properties:{"bodySize":16}
+INFO pool-1-thread-6 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-6 com.ng.my.v1.Consumer - message:hello world 2714
+INFO pool-1-thread-6 com.ng.my.v1.Consumer - 
+INFO main com.ng.my.v1.Producer - 2023-08-15 18:24:54发送消息!
+INFO main com.ng.my.v1.Consumer - 2023-08-15 18:29:45等待接收消息....
+INFO main com.ng.my.v1.Producer - message:hello world 7428
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 接收时间:2023-08-15 18:29:51
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - consumerTag:amq.ctag-OjT8ALfp7GMjIIWGvZFGyw
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - properties:{"bodySize":16}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - message:hello world 7428
+INFO pool-1-thread-4 com.ng.my.v1.Consumer - 
+INFO main com.ng.my.v1.Producer - 2023-08-15 18:29:51发送消息!
+INFO main com.ng.my.v2.NewTask - start
+INFO main com.ng.my.v2.NewTask - start
+INFO main com.ng.my.v2.NewTask -  [x] Sent 'sdhsdh'
+INFO main com.ng.my.v2.NewTask -  [x] Sent 'dssdjsdj'
+INFO main com.ng.my.v2.NewWorker - 2023-08-16 10:13:52等待接收消息....
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 接收时间:2023-08-16 10:13:52
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - consumerTag:amq.ctag-6CL46ju_Q-D95VCWnIYLjA
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - properties:{"headers":{},"deliveryMode":1,"bodySize":4}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - message:dhjd
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 接收时间:2023-08-16 10:13:52
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - consumerTag:amq.ctag-6CL46ju_Q-D95VCWnIYLjA
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":6,"contentType":"text/plain"}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - message:sdhsdh
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 接收时间:2023-08-16 10:13:52
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - consumerTag:amq.ctag-6CL46ju_Q-D95VCWnIYLjA
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":8,"contentType":"text/plain"}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - message:dssdjsdj
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 
+INFO main com.ng.my.v2.NewTask -  [x] Sent '1'
+INFO pool-1-thread-5 com.ng.my.v2.NewWorker - 接收时间:2023-08-16 10:14:06
+INFO pool-1-thread-5 com.ng.my.v2.NewWorker - consumerTag:amq.ctag-6CL46ju_Q-D95VCWnIYLjA
+INFO pool-1-thread-5 com.ng.my.v2.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":1,"contentType":"text/plain"}
+INFO pool-1-thread-5 com.ng.my.v2.NewWorker - envelope:{}
+INFO pool-1-thread-5 com.ng.my.v2.NewWorker - message:1
+INFO pool-1-thread-5 com.ng.my.v2.NewWorker - 
+INFO main com.ng.my.v2.NewWorker - 2023-08-16 10:16:31等待接收消息....
+INFO main com.ng.my.v2.NewWorker - 2023-08-16 10:17:34等待接收消息....
+INFO main com.ng.my.v2.NewWorker - 2023-08-16 10:17:41等待接收消息....
+INFO main com.ng.my.v2.NewTask - start
+INFO main com.ng.my.v2.NewTask -  [x] Sent '1'
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 接收时间:2023-08-16 10:17:56
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - consumerTag:amq.ctag-3hp5wwzkpq51vuk28D5v-w
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":1,"contentType":"text/plain"}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - message:1
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 
+INFO main com.ng.my.v2.NewTask -  [x] Sent '2'
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 接收时间:2023-08-16 10:18:06
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - consumerTag:amq.ctag--S4hGiI53MPhYrSjCd33tg
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":1,"contentType":"text/plain"}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - envelope:{}
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - message:2
+INFO pool-1-thread-4 com.ng.my.v2.NewWorker - 
+INFO main com.ng.my.worker.NewWorker - 2023-08-17 14:05:33等待接收消息....
+INFO main com.ng.my.worker.NewWorker - 2023-08-17 14:05:40等待接收消息....
+INFO main com.ng.my.worker.NewTask - start
+INFO main com.ng.my.worker.NewTask -  [x] Sent 'shsdhsd'
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - 接收时间:2023-08-17 14:06:00
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - consumerTag:amq.ctag-Bt-EH6buXGIwGkq28bECNA
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":7,"contentType":"text/plain"}
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - envelope:{}
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - message:shsdhsd
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - 
+INFO main com.ng.my.worker.NewTask -  [x] Sent '1'
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - 接收时间:2023-08-17 14:06:02
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - consumerTag:amq.ctag-VfDUvxiDhC9rUUOQfVOHXA
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":1,"contentType":"text/plain"}
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - envelope:{}
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - message:1
+INFO pool-1-thread-4 com.ng.my.worker.NewWorker - 
+INFO main com.ng.my.worker.NewTask -  [x] Sent '2'
+INFO pool-1-thread-5 com.ng.my.worker.NewWorker - 接收时间:2023-08-17 14:06:07
+INFO pool-1-thread-5 com.ng.my.worker.NewWorker - consumerTag:amq.ctag-Bt-EH6buXGIwGkq28bECNA
+INFO pool-1-thread-5 com.ng.my.worker.NewWorker - properties:{"priority":0,"deliveryMode":2,"bodySize":1,"contentType":"text/plain"}
+INFO pool-1-thread-5 com.ng.my.worker.NewWorker - envelope:{}
+INFO pool-1-thread-5 com.ng.my.worker.NewWorker - message:2
+INFO pool-1-thread-5 com.ng.my.worker.NewWorker - 
+INFO main com.ng.my.publish_subscribe.ReceiveLogs - queueName:amq.gen-ZXEZY3qcBhXQJXu8v5gRQw
+INFO main com.ng.my.publish_subscribe.EmitLog - start
+INFO main com.ng.my.publish_subscribe.EmitLog -  [x] Sent 'sdsdj'
+INFO main com.ng.my.publish_subscribe.EmitLog -  [x] Sent 'dhsdhsd'
+INFO main com.ng.my.publish_subscribe.ReceiveLogs - end
+INFO main com.ng.my.publish_subscribe.EmitLog -  [x] Sent 'sdsdj'
+INFO main com.ng.my.ask.ProducerAskOne - start
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'cbncx'
+INFO main com.ng.my.ask.ProducerAskOne - start
+INFO main com.ng.my.ask.ConsumerAskOne - C1 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'has'
+INFO main com.ng.my.ask.ConsumerAskOne - C1 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ProducerAskOne - start
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'dssdh'
+INFO main com.ng.my.ask.ConsumerAskOne - C1 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'sdsd'
+INFO main com.ng.my.ask.ConsumerAskOne - end
+INFO main com.ng.my.ask.ConsumerAskOne - C1 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ProducerAskOne - start
+INFO main com.ng.my.ask.ConsumerAskOne - C1 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ConsumerAskOne - C2 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'dshdhs'
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent '9o'
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'dhjsdj'
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'jdsdjsdj'
+INFO main com.ng.my.ask.ConsumerAskOne - end
+INFO main com.ng.my.ask.ConsumerAskOne - end
+INFO main com.ng.my.ask.ConsumerAskOne - C1 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ConsumerAskOne - C2 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'a'
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'b'
+INFO main com.ng.my.ask.ConsumerAskOne - C2 等待接收消息处理时间较短
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'dhsdh'
+INFO main com.ng.my.ask.ProducerAskOne -  [x] Sent 'sd'
+INFO main com.ng.my.ask.ConsumerAskOne - end

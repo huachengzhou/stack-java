@@ -1,7 +1,21 @@
+server:
+  port: 18099
+  servlet:
+    context-path:/rabbitmq
 spring:
+  thymeleaf:
+    check-template-location: false
+  application:
+    name: my-rabbit-mp
   rabbitmq:
     host: 127.0.0.1
     virtual-host: myvh
     username: admin
     password: 123456
     port: 5672
+    #修改配置文件 关闭自动ack 开启手动ack
+    listener:
+      simple:
+        acknowledge-mode: manual
+logging:
+  config: classpath:logback-app.xml

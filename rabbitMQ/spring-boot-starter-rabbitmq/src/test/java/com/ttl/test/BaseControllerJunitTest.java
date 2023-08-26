@@ -1,18 +1,11 @@
-package com.me.test;
+package com.ttl.test;
 
-import com.me.RabbitMqApplication;
+import com.ttl.RabbitMqTTLApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -25,7 +18,7 @@ import java.util.Map;
  * @date 2023-08-22
  */
 @AutoConfigureMockMvc
-@SpringBootTest(classes = {RabbitMqApplication.class})
+@SpringBootTest(classes = {RabbitMqTTLApplication.class})
 public class BaseControllerJunitTest {
     public static final String HSDSDJSJSDJ = "hsdsdjsjsdj";
     @Resource

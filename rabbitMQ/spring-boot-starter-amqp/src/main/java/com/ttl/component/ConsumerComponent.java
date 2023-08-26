@@ -1,4 +1,4 @@
-package com.me.component;
+package com.ttl.component;
 
 
 import com.rabbitmq.client.Channel;

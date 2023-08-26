@@ -19,14 +19,14 @@ public class MQConfig {
 
     //2、创建queue
     @Bean
-    public Queue getQueue(){
-        return new Queue("topic-queue",true,false,false,null);
+    public Queue getQueue() {
+        return new Queue("topic-queue", true, false, false, null);
     }
 
 
     //3、绑定
     @Bean
-    public Binding geteBinding(TopicExchange topicExchange, Queue queue){
+    public Binding geteBinding(TopicExchange topicExchange, Queue queue) {
         return BindingBuilder.bind(queue).to(topicExchange).with("ERROR");
     }
 

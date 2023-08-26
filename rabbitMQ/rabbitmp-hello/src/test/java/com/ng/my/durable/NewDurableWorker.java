@@ -1,4 +1,4 @@
-package com.ng.my.worker;
+package com.ng.my.durable;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
@@ -12,14 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public class NewWorker {
+public class NewDurableWorker {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private static final String TASK_QUEUE_NAME = "task_queue";
-
-    @Test
-    public void twoWork() throws Exception {
-        oneWork();
-    }
+    private static final String TASK_QUEUE_NAME = "task_durable_queue";
 
 
     @Test

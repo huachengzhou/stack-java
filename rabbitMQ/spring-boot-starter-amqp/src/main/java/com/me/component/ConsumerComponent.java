@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 @Component
 public class ConsumerComponent {
-    private final Logger logger = LoggerFactory.getLogger(getClass()) ;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
 //    @RabbitListener(queues = "topic-queue")
 //    public void getMassage(Object massage){
@@ -25,11 +25,10 @@ public class ConsumerComponent {
 
     @RabbitListener(queues = "topic-queue")
     public void getMassage(String msg, Channel channel, Message message) throws IOException {
-        System.out.println("接收到消息："+msg);
+        System.out.println("接收到消息：" + msg);
         //手动ack
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
-
 
 
 }

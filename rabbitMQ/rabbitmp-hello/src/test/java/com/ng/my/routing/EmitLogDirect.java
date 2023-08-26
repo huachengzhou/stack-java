@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 生产者
+ *
  * @author : chengdu
  * @date :  2023/8/20-08
  **/
@@ -46,7 +47,7 @@ public class EmitLogDirect {
             //路由key
             String routingKey = stringEntry.getKey();
             String message = stringEntry.getValue();
-            logger.info("生产者 路由匹配算法key:"+routingKey);
+            logger.info("生产者 路由匹配算法key:" + routingKey);
             channel.basicPublish(EXCHANGE_NAME, routingKey, null, message.getBytes("UTF-8"));
         }
 

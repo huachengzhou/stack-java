@@ -22,7 +22,7 @@ public class ConsumerAskOne {
 
         logger.info("C1 等待接收消息处理时间较短");
 
-        extracted(channel,1);
+        extracted(channel, 1);
 
         TimeUnit.MINUTES.sleep(3);
         logger.info("end");
@@ -34,13 +34,13 @@ public class ConsumerAskOne {
 
         logger.info("C2 等待接收消息处理时间较短");
 
-        extracted(channel,30);
+        extracted(channel, 30);
 
         TimeUnit.MINUTES.sleep(3);
         logger.info("end");
     }
 
-    private void extracted(Channel channel,long timeout) throws IOException {
+    private void extracted(Channel channel, long timeout) throws IOException {
         //消息消费的时候如何处理消息
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody());

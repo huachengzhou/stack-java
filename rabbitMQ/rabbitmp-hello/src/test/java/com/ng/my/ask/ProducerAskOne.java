@@ -16,7 +16,7 @@ public class ProducerAskOne {
     private static final String TASK_QUEUE_NAME = "ack_queue";
 
     @Test
-    public void acceptProducer()throws Exception{
+    public void acceptProducer() throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
 
         //创建一个队列

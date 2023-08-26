@@ -19,7 +19,7 @@ public class EmitLog {
     private static final String EXCHANGE_NAME = "logs";
 
     @Test
-    public void acceptProducer()throws Exception{
+    public void acceptProducer() throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
 
         //创建交换机 并指定广播模式

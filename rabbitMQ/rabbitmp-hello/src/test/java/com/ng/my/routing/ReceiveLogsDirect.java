@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 消费者
+ *
  * @author : chengdu
  * @date :  2023/8/20-08
  **/
@@ -21,7 +22,7 @@ public class ReceiveLogsDirect {
     private static final String EXCHANGE_NAME = "logDirect";
 
     @Test
-    public void executeWork() throws Exception{
+    public void executeWork() throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
 
         //创建2个临时队列
@@ -40,7 +41,6 @@ public class ReceiveLogsDirect {
 //        channel.queueBind(queueTwo, EXCHANGE_NAME, "debug");
 
 
-
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             logger.info("consumerTag:" + consumerTag);
@@ -49,8 +49,10 @@ public class ReceiveLogsDirect {
             System.out.println(" 消息 '" + message + "'");
         };
         //队列名称,自动应答
-        channel.basicConsume(queueOne, true, deliverCallback, consumerTag -> { });
-        channel.basicConsume(queueTwo, true, deliverCallback, consumerTag -> { });
+        channel.basicConsume(queueOne, true, deliverCallback, consumerTag -> {
+        });
+        channel.basicConsume(queueTwo, true, deliverCallback, consumerTag -> {
+        });
 
         TimeUnit.MINUTES.sleep(2);
         logger.info("end");

@@ -16,8 +16,9 @@ import java.util.concurrent.TimeUnit;
 public class ReceiveLogs {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final String EXCHANGE_NAME = "logs";
+
     @Test
-    public void executeWork() throws Exception{
+    public void executeWork() throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
 
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
@@ -31,7 +32,7 @@ public class ReceiveLogs {
 
         channel.queueBind(queueName, EXCHANGE_NAME, "");
 
-        logger.info("queueName:"+queueName);
+        logger.info("queueName:" + queueName);
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
@@ -40,7 +41,8 @@ public class ReceiveLogs {
             System.out.println(" [x] Received '" + message + "'");
         };
         //队列名称,自动应答
-        channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
+        channel.basicConsume(queueName, true, deliverCallback, consumerTag -> {
+        });
 
         TimeUnit.MINUTES.sleep(2);
         logger.info("end");

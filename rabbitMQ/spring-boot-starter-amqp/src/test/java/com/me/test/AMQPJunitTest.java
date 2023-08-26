@@ -21,13 +21,13 @@ import java.io.IOException;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {RabbitMqApplication.class})
 public class AMQPJunitTest {
-    private final Logger logger = LoggerFactory.getLogger(getClass()) ;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     @Test
-   public void contextLoads() throws IOException {
-        rabbitTemplate.convertAndSend("boot-topic-exchange","ERROR","error");
+    public void contextLoads() throws IOException {
+        rabbitTemplate.convertAndSend("boot-topic-exchange", "ERROR", "error");
         logger.info("sucess!");
     }
 

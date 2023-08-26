@@ -19,12 +19,13 @@ public class Producer {
 
     /**
      * 简单生产者
+     *
      * @throws Exception
      */
     @Test
-    public void acceptProducer()throws Exception{
+    public void acceptProducer() throws Exception {
         //1:创建连接池
-        ConnectionFactory connectionFactory = new ConnectionFactory() ;
+        ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("127.0.0.1");
         connectionFactory.setUsername("admin");
         connectionFactory.setPassword("123456");
@@ -42,8 +43,8 @@ public class Producer {
          * 4.是否自动删除 最后一个消费者端开连接以后 该队列是否自动删除 true 自动删除
          * 5.其他参数
          */
-        channel.queueDeclare(QUEUE_NAME,false,false,false,null) ;
-        String message = "hello world "+ RandomUtil.randomInt(10,10000);
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        String message = "hello world " + RandomUtil.randomInt(10, 10000);
         /**
          * 发送一个消息
          * 1.发送到那个交换机
@@ -51,9 +52,9 @@ public class Producer {
          * 3.其他的参数信息
          * 4.发送消息的消息体
          */
-        channel.basicPublish("",QUEUE_NAME,null,message.getBytes("UTF-8"));
-        logger.info("message:"+message);
-        logger.info(DateUtil.now() +"发送消息!");
+        channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
+        logger.info("message:" + message);
+        logger.info(DateUtil.now() + "发送消息!");
     }
 
 }

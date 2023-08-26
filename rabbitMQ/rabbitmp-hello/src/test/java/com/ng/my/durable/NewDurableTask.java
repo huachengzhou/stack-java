@@ -1,4 +1,4 @@
-package com.ng.my.worker;
+package com.ng.my.durable;
 
 import com.my.common.RabbitMqUtils;
 import com.rabbitmq.client.Channel;
@@ -10,14 +10,16 @@ import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class NewTask {
-    private static final String TASK_QUEUE_NAME = "task_queue";
+public class NewDurableTask {
+    private static final String TASK_QUEUE_NAME = "task_durable_queue";
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Test
     public void acceptProducer() throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
-        channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);
+        //让消息持久化
+        boolean durable = true;
+        channel.queueDeclare(TASK_QUEUE_NAME, durable, false, false, null);
 
         //从控制台当中接受信息
         logger.info("start");

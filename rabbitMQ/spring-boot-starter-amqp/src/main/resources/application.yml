@@ -1,12 +1,8 @@
-server:
-  port: 18099
-  servlet:
-    context-path:/rabbitmq
-spring:
+#knife4j:
+#  enable: true
+  spring:
   thymeleaf:
     check-template-location: false
-  application:
-    name: my-rabbit-mp
   rabbitmq:
     host: 127.0.0.1
     virtual-host: myvh

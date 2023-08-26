@@ -1,4 +1,4 @@
-package com.ttl.config;
+package com.me.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

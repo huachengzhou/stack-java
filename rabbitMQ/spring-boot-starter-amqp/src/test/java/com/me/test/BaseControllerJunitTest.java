@@ -1,6 +1,6 @@
-package com.ttl.test;
+package com.me.test;
 
-import com.ttl.RabbitMqApplication;
+import com.me.RabbitMqApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,6 @@
-package com.ttl.test;
+package com.me.test;
 
-import com.ttl.RabbitMqApplication;
+import com.me.RabbitMqApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

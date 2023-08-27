@@ -30,7 +30,8 @@ import java.util.Date;
 @NoArgsConstructor         // 无参构造
 // 指定当前类对象对应哪个ES中的索引
 // 如果索引不存在  type 实际设置了没啥用  还是用的默认_doc 因为高版本已经删除这个特性了
-@Document(indexName = "index_goods",type = "goods")
+//@Document(indexName = "index_goods",type = "goods")
+@Document(indexName = "index_goods")
 public class Goods {
 
 

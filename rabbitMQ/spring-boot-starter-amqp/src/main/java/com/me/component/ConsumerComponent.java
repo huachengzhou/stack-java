@@ -1,6 +1,7 @@
 package com.me.component;
 
 
+import com.me.config.MQConfig;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,18 +18,56 @@ import java.io.IOException;
 public class ConsumerComponent {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-//    @RabbitListener(queues = "topic-queue")
+//    @RabbitListener(queues = MQConfig.BOOT_TOPIC_QUEUE)
 //    public void getMassage(Object massage){
 //        logger.info("接收到消息："+massage);
 //    }
 
 
-    @RabbitListener(queues = "topic-queue")
+    /**
+     * 普通队列
+     * @param msg
+     * @param channel
+     * @param message
+     * @throws IOException
+     */
+    @RabbitListener(queues = MQConfig.BOOT_TOPIC_QUEUE)
     public void getMassage(String msg, Channel channel, Message message) throws IOException {
         System.out.println("接收到消息：" + msg);
         //手动ack
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
+
+
+    /**
+     * 死信队列
+     * @param msg
+     * @param channel
+     * @param message
+     * @throws IOException
+     */
+    @RabbitListener(queues = MQConfig.QUEUE_TTL_WAITING)
+    public void getMassageTTL(String msg, Channel channel, Message message) throws IOException {
+        System.out.println("接收到消息：" + msg);
+        //手动ack
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    }
+
+    /**
+     * 延迟队列
+     * @param msg
+     * @param channel
+     * @param message
+     * @throws IOException
+     */
+    @RabbitListener(queues = MQConfig.QUEUE_WAITING)
+    public void getMassageWaiting(String msg, Channel channel, Message message) throws IOException {
+        System.out.println("接收到消息：" + msg);
+        //手动ack
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    }
+
+
 
 
 }

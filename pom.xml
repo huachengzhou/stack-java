@@ -13,7 +13,6 @@
         <module>install-plug-pdf</module>
         <module>other-office</module>
         <module>install-httpClient</module>
-        <module>install-plug-jsoup</module>
         <module>install-plug-htmlUnit</module>
         <module>install-plug-testng</module>
         <module>tree</module>

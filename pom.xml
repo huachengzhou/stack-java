@@ -9,15 +9,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>algs</module>
-        <module>thread</module>
-        <module>core-se</module>
-        <module>core-se-base</module>
         <module>install-plug-poi</module>
         <module>install-plug-pdf</module>
         <module>other-office</module>
         <module>install-httpClient</module>
-        <module>instal-plug-jsoup</module>
+        <module>install-plug-jsoup</module>
         <module>install-plug-htmlUnit</module>
         <module>install-plug-testng</module>
         <module>tree</module>

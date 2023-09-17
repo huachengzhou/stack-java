@@ -1,5 +1,6 @@
 package com.my;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
@@ -13,12 +14,14 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.MapSolrParams;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
 
 /*
-solr create -c zch[admin]
+solr create -c zch
 create -c admin
 solr create -c admin
 solr create -c product
@@ -26,15 +29,19 @@ solr create -c product
 
 
 public class SolrClient {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     String coreName = "zch";
     //设置solr客户端url地址
 
     String solrUrl = "http://localhost:8983/solr";
 
+    //排除 maven 依赖 https://blog.csdn.net/oDengWei/article/details/121857230
+
     @Test
     public void testHttpSolrClient() throws Exception {
         HttpSolrClient solrClient = getHttpSolrClient();
         System.out.println(solrClient);
+        logger.info(solrClient.toString());
     }
 
 
@@ -49,6 +56,7 @@ public class SolrClient {
         //排序方式
         map.put("sort", "id asc");
         MapSolrParams solrParams = new MapSolrParams(map);
+
 
         QueryResponse queryResponse = solrClient.query(coreName, solrParams);
         SolrDocumentList documents = queryResponse.getResults();
@@ -65,6 +73,10 @@ public class SolrClient {
         }
     }
 
+    /**
+     * 根据条件删除文档
+     * @throws Exception
+     */
     @Test
     public void deleteOneDoc() throws Exception {
         HttpSolrClient solrClient = getHttpSolrClient();
@@ -74,9 +86,26 @@ public class SolrClient {
         System.out.println(response.getStatus());
     }
 
+    /**
+     * 注意本方法的list中的删除条件  是  或
+     * @throws Exception
+     */
     @Test
     public void deleteQueryDoc() throws Exception {
+        HttpSolrClient solrClient = getHttpSolrClient();
+        UpdateRequest updateRequest = new UpdateRequest();
+        //增加两个条件进来
+        List<String> deleteQuery = new ArrayList<>(2);
+        deleteQuery.add("age:93");
 
+//        deleteQuery.add("dataType:BomBaseVoucher");
+        deleteQuery.add("abc:123");
+        updateRequest.setDeleteQuery(deleteQuery);
+
+
+        UpdateResponse response = updateRequest.commit(solrClient, coreName);
+        System.out.println(response._size());
+        System.out.println(response.getStatus());
     }
 
     @Test
@@ -85,10 +114,11 @@ public class SolrClient {
 
         SolrInputDocument document = new SolrInputDocument();
         document.addField("id", UUID.randomUUID().toString());
-        document.addField("age", 30);
-        document.addField("name", "李白3");
+        document.addField("age", RandomUtil.randomInt(1,100));
+        document.addField("name", "李白"+RandomUtil.randomInt(1,100));
         document.addField("poems", "望庐山瀑布");
         document.addField("about", "字太白");
+        document.addField("abc", "123");
         document.addField("dataType", "BomBaseVoucher");
 
 

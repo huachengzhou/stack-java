@@ -83,6 +83,8 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- mvn install:install-file -Dfile=E:\myProjects\stack-java\other-office\src\main\lib\aspose-words\21.12\aspose-words-21.12.jar -DgroupId=com.zhou.aspose-words -DartifactId=aspose-words -Dversion=21.12 -Dpackaging=jar   -->
+
         <!-- mvn install:install-file -Dfile=D:\IdeaProjects\stack-java\other-office\src\main\lib\aspose-words\16.4.0\aspose-words-16.4.0.jar -DgroupId=com.zhou.aspose-words -DartifactId=aspose-words -Dversion=16.4.0 -Dpackaging=jar -->
         <dependency>
             <groupId>com.zhou.aspose-words</groupId>
